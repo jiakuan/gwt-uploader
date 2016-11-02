@@ -1,0 +1,35 @@
+/*
+ * Copyright (c) 2016 WisePersist.org. All rights reserved.
+ */
+
+buildscript {
+    repositories {
+        // choose your prefered one
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'de.aaschmid.gradle.plugins:gradle-cpd-plugin:0.5'
+    }
+}
+
+apply plugin: 'cpd'
+
+// optional - settings for every CPD task
+cpd {
+//    language = 'cpp'
+    // defaults to '5.3.0'; just available for v5.2.0 and higher (see explanation above)
+    toolVersion = '5.2.3'
+}
+
+// optional - default report is xml and default sources are 'main' and 'test'
+cpdCheck {
+    reports {
+        text.enabled = true
+        xml.enabled = false
+    }
+    // only java, groovy and scala classes in 'main' sourceSets
+    source = sourceSets.main.allJava
+    exclude '**/generated/**'
+}

@@ -1,0 +1,75 @@
+.gwt-ProgressBar-shell {
+    border: 2px solid #848280;
+    background-color: #454545;
+    height: 16px;
+    width: 50%;
+    margin-left: 10px;
+}
+
+.gwt-ProgressBar-shell .gwt-ProgressBar-bar {
+    background-color: #BB4B44;
+}
+
+.gwt-ProgressBar-shell .gwt-ProgressBar-text {
+    padding: 0;
+    margin: 0;
+    color: white;
+}
+
+.progressLabel {
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+}
+
+.dropFilesLabel {
+    margin-top: 6px;
+    padding-top: 28px;
+    padding-bottom: 28px;
+    font-family: verdana, arial, sans-serif;
+    font-size: 12px;
+    color: #2d4b6d;
+    font-weight: bold;
+    text-align: center;
+    display: block;
+    border: 2px dashed #888888;
+    border-radius: 7px;
+}
+
+.dropFilesLabelHover {
+    border: 2px solid #444444;
+    color: #7c9647;
+}
+
+.btnbarpanel {
+}
+
+.demoPanel {
+
+}
+
+.viewSourceBtn {
+    margin-top: 6px;
+    cursor: pointer;
+}
+
+.viewSourceBtn-up {
+
+}
+.viewSourceBtn-up-hovering {
+
+}
+.viewSourceBtn-up-disabled {
+
+}
+
+.viewSourceBtn-down {
+
+}
+
+.cancelButton {
+    margin: 3px 0 -1px 2px;
+    cursor: pointer;
+}
+
+
+

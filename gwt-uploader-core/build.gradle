@@ -1,0 +1,248 @@
+/*
+ * Copyright (c) 2016 WisePersist.org
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        // https://plugins.gradle.org/plugin/com.github.kt3k.coveralls
+        classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.6.3"
+        // https://github.com/aaschmid/gradle-cpd-plugin
+        classpath 'de.aaschmid.gradle.plugins:gradle-cpd-plugin:0.5'
+    }
+}
+
+plugins {
+    id 'net.researchgate.release' version '2.4.0'
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'maven'
+apply plugin: 'signing'
+
+group = 'org.wisepersist'
+version = "$version"
+archivesBaseName = 'gwt-uploader-core'
+
+def skip_quality_check = project.hasProperty('check') && check == 'false'
+println("skip_quality_check: " + skip_quality_check)
+
+if (!skip_quality_check) {
+    apply from: "$rootDir/gradle/checkstyle.gradle"
+    apply from: "$rootDir/gradle/pmd.gradle"
+    apply from: "$rootDir/gradle/cpd.gradle"
+    apply from: "$rootDir/gradle/findbugs.gradle"
+    apply from: "$rootDir/gradle/jacoco.gradle"
+}
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+project.extensions.idea.module.iml {
+    withXml {
+        it.asNode().component.
+                find { it.@name == 'NewModuleRootManager' }.@LANGUAGE_LEVEL = target.level
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+// ensure that test resources (src/test/resources) are added to CLASSPATH;
+// see http://forums.gradle.org/gradle/topics/tests_arent_executed_when_setting_the_test_runtimeclasspath and
+// http://gradle.org/docs/current/dsl/org.gradle.api.tasks.testing.Test.html#org.gradle.api.tasks.testing.Test:classpath
+sourceSets {
+    main {
+        runtimeClasspath = files(output.resourcesDir) + runtimeClasspath
+    }
+    test {
+        runtimeClasspath = files(output.resourcesDir) + runtimeClasspath
+    }
+}
+
+test {
+    // enable TestNG support (default is JUnit)
+    useTestNG() {
+        suiteXmlBuilder().suite(name: 'gwt-ace', parallel: 'tests') {
+            test(name: 'all-tests') {
+                packages {
+                    'package'(name: 'org.wisepersist.*')
+                }
+            }
+        }
+        excludeGroups 'integration', 'stress'
+        // useDefaultListeners = true produces the testng-results.xml files used by bamboo
+        // to display test result summaries
+        useDefaultListeners = true
+    }
+}
+
+configurations.all {
+    resolutionStrategy {
+        // fail eagerly on version conflict (includes transitive dependencies)
+        // e.g. multiple different versions of the same dependency (group and name are equal)
+        failOnVersionConflict()
+
+        // force certain versions of dependencies (including transitive)
+        //  *append new forced modules:
+        force 'com.google.guava:guava:19.0',
+              'com.google.code.findbugs:annotations:3.0.1',
+              'com.google.code.findbugs:jsr305:3.0.1'
+    }
+}
+
+dependencies {
+    // Google Web Toolkit
+    compile 'com.google.gwt:gwt-user:2.7.0'
+    compile 'com.google.guava:guava-gwt:19.0'
+
+    // utility dependencies
+    compile 'com.google.guava:guava:19.0'
+
+    // FindBugs annotations
+    compile 'com.google.code.findbugs:annotations:3.0.1'
+    compile 'com.google.code.findbugs:jsr305:3.0.1'
+
+    // test dependencies
+    testCompile 'org.mockito:mockito-core:2.2.7'
+    testCompile 'org.testng:testng:6.9.10'
+}
+
+jar.doFirst {
+    sourceSets.main.java.srcDirs.each {
+        from it
+    }
+}
+
+ext.userHome = System.getProperty("user.home")
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs += ["-sourcepath", ""]
+}
+
+javadoc {
+    // Avoid error: cannot access external classes
+    options.addStringOption("sourcepath", "")
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from 'build/docs/javadoc'
+}
+
+artifacts {
+    archives jar
+    archives sourcesJar
+    archives javadocJar
+}
+
+signing {
+    sign configurations.archives
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'gwt-uploader'
+                packaging 'jar'
+                description 'GWT Uploader is a freely available open source GWT library that encapsulates the file upload capabilities provided by the File and XMLHttpRequest Level 2 APIs as well as the SWFUpload library.'
+                url 'https://jiakuan.github.io/gwt-uploader/'
+
+                scm {
+                    connection 'scm:git:git@github.com:jiakuan/gwt-uploader.git'
+                    developerConnection 'scm:git:git@github.com:jiakuan/gwt-uploader.git'
+                    url 'git@github.com:jiakuan/gwt-uploader.git'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        distribution 'repo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'jiakuan'
+                        name 'Jiakuan Wang'
+                        email 'delight.wjk@gmail.com'
+                        organization 'WisePersist'
+                        organizationUrl 'https://jiakuan.github.io/gwt-uploader/'
+                        roles {
+                            role 'architect'
+                            role 'developer'
+                        }
+                        timezone '+8'
+                    }
+                }
+            }
+        }
+    }
+}
+
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            repository(url: "file://${userHome}/Dropbox/Public/mvn-repo/")
+//        }
+//    }
+//}
+
+task createPom << {
+    pom {
+        project {
+            packaging 'jar'
+            build {
+                plugins {
+                    plugin {
+                        groupId 'org.apache.maven.plugins'
+                        artifactId 'maven-compiler-plugin'
+                        version '3.1'
+                        configuration {
+                            source '1.7'
+                            target '1.7'
+                            encoding 'UTF-8'
+                        }
+                    }
+                }
+            }
+        }
+    }.writeTo("$projectDir/pom.xml")
+}

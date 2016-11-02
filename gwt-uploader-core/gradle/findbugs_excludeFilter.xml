@@ -1,0 +1,13 @@
+<FindBugsFilter>
+
+  <Match>
+    <Package name="~org\.wisepersist\.generated"/>
+    <!--<Bug pattern="NM_CLASS_NAMING_CONVENTION,SE_BAD_FIELD"/>-->
+  </Match>
+
+  <Match>
+    <Package name="~com\.google\.common\.base\.*"/>
+    <!--<Bug pattern="NP_METHOD_PARAMETER_TIGHTENS_ANNOTATION"/>-->
+  </Match>
+
+</FindBugsFilter>

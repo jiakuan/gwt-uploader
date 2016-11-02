@@ -1,0 +1,11 @@
+---------------------------------------------------------------------
+Usage: make dev|clean|build|release|deploy"
+
+  clean   - clean the build folders
+  build   - build the projects
+  release - create a new release of gwt-uploader-core
+  publish - publish the latest stable release of gwt-uploader-core
+            to Maven central
+  deploy  - deploy gwt-upload-demo to remote AppEngine
+
+---------------------------------------------------------------------
