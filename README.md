@@ -1,21 +1,21 @@
-# GWT JWT Deocde
+# GWT Uploader
 
-GWT JWT Deocde is a simple GWT wrapper for JWT decode Javascript library, so that we can use the feature in Java code directly.
+GWT Uploader is a simple GWT wrapper for JWT decode Javascript library, so that we can use the feature in Java code directly.
 
-Please see demo here: [https://jiakuan.github.io/gwt-jwt-decode/](https://jiakuan.github.io/gwt-jwt-decode/)
+Please see demo here: [https://jiakuan.github.io/gwt-uploader/](https://jiakuan.github.io/gwt-uploader/)
 
 ## Configure Maven dependency
 
-GWT JWT Deocde is available in Maven central repository:
+GWT Uploader is available in Maven central repository:
 
-http://search.maven.org/#search%7Cga%7C1%7Cgwt-jwt-decode
+http://search.maven.org/#search%7Cga%7C1%7Cgwtuploader
 
 To add the dependency to your `build.gradle` (for Gradle projects) or `pom.xml` (for Maven projects), use the following configuration:
 
 For Gradle projects:
 
 ```
-compile 'org.wisepersist:gwt-jwt-decode:1.0.4'
+compile 'org.wisepersist:gwtuploader:1.0.4'
 ```
 
 For Maven projects:
@@ -23,7 +23,7 @@ For Maven projects:
 ```
 <dependency>
     <groupId>org.wisepersist</groupId>
-    <artifactId>gwt-jwt-decode</artifactId>
+    <artifactId>gwtuploader</artifactId>
     <version>1.0.4</version>
 </dependency>
 ```
@@ -33,7 +33,7 @@ If you would like to use the 1.0.5-SNAPSHOT release, use this configuration.
 For Gradle projects:
 
 ```
-compile 'org.wisepersist:gwt-jwt-decode:1.0.5-SNAPSHOT'
+compile 'org.wisepersist:gwtuploader:1.0.5-SNAPSHOT'
 ```
 
 For Maven projects:
@@ -41,7 +41,7 @@ For Maven projects:
 ```
 <dependency>
     <groupId>org.wisepersist</groupId>
-    <artifactId>gwt-jwt-decode</artifactId>
+    <artifactId>gwtuploader</artifactId>
     <version>1.0.5-SNAPSHOT</version>
 </dependency>
 ```
@@ -63,17 +63,9 @@ In order to use snapshot releases you also need to add the Sonatype snapshots re
 </repositories>
 ```
 
-## How to use GWT JWT Deocde?
+## How to use GWT Uploader?
 
-Using GWT JWT decode is as simple as the following code:
-
-```
-import org.wisepersist.gwt.jwtdecode.client.JwtDecoder;
-import org.wisepersist.gwt.jwtdecode.client.TokenJso;
-
-final TokenJso decoded = JwtDecoder.decode(token);
-GWT.log("decoded: " + decoded.toJsonPretty());
-```
+TBD
 
 ## How to contribute
 
