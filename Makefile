@@ -5,17 +5,17 @@ help:
 	cat Makefile.help
 
 clean:
-	cd ${mkfile_dir}/gwt-uploader-core && gradle clean
-	cd ${mkfile_dir}/gwt-uploader-demo && gradle clean
+	cd ${mkfile_dir}/gwtuploader && gradle clean
+	cd ${mkfile_dir}/gwtuploader-demo && gradle clean
 	cd ${mkfile_dir}
 
 build:
-	cd ${mkfile_dir}/gwt-uploader-core && gradle build
-	cd ${mkfile_dir}/gwt-uploader-demo && gradle build
+	cd ${mkfile_dir}/gwtuploader && gradle build
+	cd ${mkfile_dir}/gwtuploader-demo && gradle build
 	cd ${mkfile_dir}
 
 release:
-	cd ${mkfile_dir}/gwt-uploader-core && gradle release
+	cd ${mkfile_dir}/gwtuploader && gradle release
 
 publish:
 	LATEST_TAG?=`git tag|tail -1`
