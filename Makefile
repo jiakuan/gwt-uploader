@@ -1,3 +1,4 @@
+LATEST_TAG?=`cd ${mkfile_dir}/gwt-uploader && git tag|tail -1`
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 mkfile_dir :=$(shell cd $(shell dirname $(mkfile_path)); pwd)
 
@@ -19,6 +20,5 @@ release:
 	cd ${mkfile_dir}/gwt-uploader && gradle release && cd ${mkfile_dir}
 
 publish:
-	LATEST_TAG=`cd ${mkfile_dir}/gwt-uploader && git tag|tail -1`
 	cd ${mkfile_dir}/gwt-uploader && git checkout tags/${LATEST_TAG} && gradle build install uploadArchives && git checkout master
 	cd ${mkfile_dir}
