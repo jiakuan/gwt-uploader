@@ -41,7 +41,7 @@ apply plugin: 'signing'
 
 group = 'org.wisepersist'
 version = "$version"
-archivesBaseName = 'gwtuploader'
+archivesBaseName = 'gwt-uploader'
 
 sourceCompatibility = 1.7
 targetCompatibility = 1.7

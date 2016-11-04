@@ -31,7 +31,6 @@ package org.wisepersist.gwt.uploader.client.events;
  * Selection Dialog window is closed. A file may not be queued for several reasons such as,
  * the file exceeds the file size, the file is empty or a file or queue limit has been exceeded.
  * <p>
- * <p>
  * See the documentation on the {@link FileQueueErrorEvent} class for more details on the data
  * available when a file queue error event occurs.
  *

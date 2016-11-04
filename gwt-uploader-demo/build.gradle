@@ -44,7 +44,7 @@ apply plugin: 'appengine'
 
 group = 'org.wisepersist'
 version = "$version"
-archivesBaseName = 'gwtuploader-demo'
+archivesBaseName = 'gwt-uploader-demo'
 
 def skip_quality_check = project.hasProperty('check') && check == 'false'
 println("skip_quality_check: " + skip_quality_check)
@@ -116,7 +116,11 @@ configurations.all {
 }
 
 dependencies {
-    compile "org.wisepersist:gwtuploader:$version"
+    compile "org.wisepersist:gwt-uploader:$version"
+
+    // Google AppEngine related dependencies
+    appengineSdk 'com.google.appengine:appengine-java-sdk:1.9.42'
+    compile 'com.google.appengine:appengine-api-1.0-sdk:1.9.42'
 
     // Google Web Toolkit
     compile 'com.google.gwt:gwt-user:2.7.0'
