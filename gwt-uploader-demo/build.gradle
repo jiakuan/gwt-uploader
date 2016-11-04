@@ -107,7 +107,7 @@ configurations.all {
 }
 
 dependencies {
-    compile 'org.wisepersist:gwt-uploader:1.1.1-SNAPSHOT'
+    compile 'org.wisepersist:gwt-uploader:1.1.1'
 
     // Google AppEngine related dependencies
     appengineSdk 'com.google.appengine:appengine-java-sdk:1.9.42'
