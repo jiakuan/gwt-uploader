@@ -14,14 +14,14 @@ git clone git@github.com:jiakuan/gwt-uploader.git gwt-uploader-root
 
 GWT Uploader is available in Maven central repository:
 
-http://search.maven.org/#search%7Cga%7C1%7Cgwtuploader
+http://search.maven.org/#search%7Cga%7C1%7Cgwt-uploader
 
 To add the dependency to your `build.gradle` (for Gradle projects) or `pom.xml` (for Maven projects), use the following configuration:
 
 For Gradle projects:
 
 ```
-compile 'org.wisepersist:gwtuploader:1.0.4'
+compile 'org.wisepersist:gwt-uploader:1.1.0'
 ```
 
 For Maven projects:
@@ -29,17 +29,17 @@ For Maven projects:
 ```
 <dependency>
     <groupId>org.wisepersist</groupId>
-    <artifactId>gwtuploader</artifactId>
-    <version>1.0.4</version>
+    <artifactId>gwt-uploader</artifactId>
+    <version>1.1.0</version>
 </dependency>
 ```
 
-If you would like to use the 1.0.5-SNAPSHOT release, use this configuration.
+If you would like to use the 1.1.1-SNAPSHOT release, use this configuration.
 
 For Gradle projects:
 
 ```
-compile 'org.wisepersist:gwtuploader:1.0.5-SNAPSHOT'
+compile 'org.wisepersist:gwt-uploader:1.1.1-SNAPSHOT'
 ```
 
 For Maven projects:
@@ -47,8 +47,8 @@ For Maven projects:
 ```
 <dependency>
     <groupId>org.wisepersist</groupId>
-    <artifactId>gwtuploader</artifactId>
-    <version>1.0.5-SNAPSHOT</version>
+    <artifactId>gwt-uploader</artifactId>
+    <version>1.1.1-SNAPSHOT</version>
 </dependency>
 ```
 
