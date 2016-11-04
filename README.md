@@ -4,6 +4,12 @@ GWT Uploader is a simple GWT wrapper for JWT decode Javascript library, so that 
 
 Please see demo here: [https://jiakuan.github.io/gwt-uploader/](https://jiakuan.github.io/gwt-uploader/)
 
+Use the following command to checkout the source code:
+
+```
+git clone git@github.com:jiakuan/gwt-uploader.git gwt-uploader-root
+```
+
 ## Configure Maven dependency
 
 GWT Uploader is available in Maven central repository:
