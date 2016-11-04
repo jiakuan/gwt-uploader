@@ -19,7 +19,8 @@ release:
 	cd ${mkfile_dir}/gwt-uploader && gradle release && cd ${mkfile_dir}
 
 publish:
-	LATEST_TAG?=`git tag|tail -1`
-	git checkout tags/${LATEST_TAG}
-	gradle build install uploadArchives
+	cd ${mkfile_dir}/gwt-uploader && \
+	LATEST_TAG=`git tag|tail -1` && \
+	git checkout tags/${LATEST_TAG} && \
+	gradle build install uploadArchives && \
 	git checkout master
