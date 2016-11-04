@@ -46,16 +46,6 @@ group = 'org.wisepersist'
 version = "$version"
 archivesBaseName = 'gwt-uploader-demo'
 
-def skip_quality_check = project.hasProperty('check') && check == 'false'
-println("skip_quality_check: " + skip_quality_check)
-if (!skip_quality_check) {
-    apply from: "$rootDir/gradle/checkstyle.gradle"
-    apply from: "$rootDir/gradle/pmd.gradle"
-    apply from: "$rootDir/gradle/cpd.gradle"
-    apply from: "$rootDir/gradle/findbugs.gradle"
-    apply from: "$rootDir/gradle/jacoco.gradle"
-}
-
 repositories {
     mavenLocal()
     mavenCentral()
@@ -108,7 +98,8 @@ configurations.all {
               'commons-io:commons-io:2.4',
               'commons-lang:commons-lang:2.6',
               'org.glassfish.jersey.containers:jersey-container-servlet-core:2.23',
-              'org.javassist:javassist:3.18.2-GA', // https://github.com/ronmamo/reflections/issues/92
+              'org.javassist:javassist:3.18.2-GA',
+              // https://github.com/ronmamo/reflections/issues/92
               'org.slf4j:slf4j-api:1.7.21',
               'org.testng:testng:6.9.10',
               'joda-time:joda-time:2.9.4'
@@ -116,7 +107,7 @@ configurations.all {
 }
 
 dependencies {
-    compile "org.wisepersist:gwt-uploader:$version"
+    compile 'org.wisepersist:gwt-uploader:1.1.1-SNAPSHOT'
 
     // Google AppEngine related dependencies
     appengineSdk 'com.google.appengine:appengine-java-sdk:1.9.42'
@@ -126,6 +117,31 @@ dependencies {
     compile 'com.google.gwt:gwt-user:2.7.0'
     compile 'com.google.gwt:gwt-dev:2.7.0'
     compile 'com.google.guava:guava-gwt:19.0'
+
+    // Needed for GWT compile and at runtime for RequestBuilder
+    // Specify two artifacts as workaround for GRADLE-1934
+    compile('javax.validation:validation-api:1.0.0.GA') {
+        artifact {
+            name = 'validation-api'
+            type = 'jar'
+        }
+        artifact {
+            name = 'validation-api'
+            type = 'jar'
+            classifier = 'sources'
+        }
+    }
+    compile('org.hibernate:hibernate-validator:4.1.0.Final') {
+        artifact {
+            name = 'hibernate-validator'
+            type = 'jar'
+        }
+        artifact {
+            name = 'hibernate-validator'
+            type = 'jar'
+            classifier = 'sources'
+        }
+    }
 }
 
 processResources {

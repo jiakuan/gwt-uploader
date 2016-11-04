@@ -26,7 +26,6 @@ import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-import org.wisepersist.gwt.uploader.client.ProgressBar;
 import org.wisepersist.gwt.uploader.client.Uploader;
 import org.wisepersist.gwt.uploader.client.events.FileDialogCompleteEvent;
 import org.wisepersist.gwt.uploader.client.events.FileDialogCompleteHandler;
@@ -42,6 +41,7 @@ import org.wisepersist.gwt.uploader.client.events.UploadProgressEvent;
 import org.wisepersist.gwt.uploader.client.events.UploadProgressHandler;
 import org.wisepersist.gwt.uploader.client.events.UploadSuccessEvent;
 import org.wisepersist.gwt.uploader.client.events.UploadSuccessHandler;
+import org.wisepersist.gwt.uploader.client.progress.ProgressBar;
 
 /**
  * Uploader Image Button and GWT Progress Bar example of GWT Uploader.
@@ -51,7 +51,8 @@ import org.wisepersist.gwt.uploader.client.events.UploadSuccessHandler;
 public class ImageButtonAndProgressBar implements EntryPoint, UploaderPanel {
 
   final Uploader uploader = new Uploader();
-  private ProgressBar progressBar = new ProgressBar(0.0, 1.0);
+  private ProgressBar progressBar =
+      new ProgressBar(0.0, 1.0, 0.0, new CancelProgressBarTextFormatter());
   private Image cancelButton = new Image(
       GWT.getModuleBaseURL() + "resources/images/icons/cancel.png");
 
@@ -159,5 +160,16 @@ public class ImageButtonAndProgressBar implements EntryPoint, UploaderPanel {
     horizontalPanel.setVerticalAlignment(HorizontalPanel.ALIGN_MIDDLE);
     horizontalPanel.setCellHorizontalAlignment(uploader, HorizontalPanel.ALIGN_RIGHT);
     return horizontalPanel;
+  }
+
+  protected class CancelProgressBarTextFormatter extends ProgressBar.TextFormatter {
+
+    @Override
+    protected String getText(ProgressBar bar, double curProgress) {
+      if (curProgress < 0) {
+        return "Cancelled";
+      }
+      return ((int) (100 * bar.getPercent())) + "%";
+    }
   }
 }

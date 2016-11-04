@@ -5,7 +5,7 @@
 
   <!-- Default page to serve -->
   <welcome-file-list>
-    <welcome-file>JwtDecodeDemo.html</welcome-file>
+    <welcome-file>GwtUploaderDemo.html</welcome-file>
   </welcome-file-list>
 
 </web-app>

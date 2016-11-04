@@ -53,10 +53,6 @@ public class ImageButtonAndProgressText implements EntryPoint, UploaderPanel {
     RootPanel.get("ImageButtonAndProgressText").add(getUploaderPanel());
   }
 
-  private void resetText() {
-    progressLabel.setText("");
-  }
-
   @Override
   public Widget getUploaderPanel() {
     progressLabel.setStyleName("progressLabel");
@@ -131,5 +127,9 @@ public class ImageButtonAndProgressText implements EntryPoint, UploaderPanel {
     verticalPanel.setCellHorizontalAlignment(uploader, HorizontalPanel.ALIGN_LEFT);
     verticalPanel.setCellHorizontalAlignment(progressLabel, HorizontalPanel.ALIGN_LEFT);
     return verticalPanel;
+  }
+
+  private void resetText() {
+    progressLabel.setText("");
   }
 }

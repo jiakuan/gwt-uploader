@@ -1394,13 +1394,13 @@ public class Uploader extends AbsolutePanel {
 
       // Setup the event handlers we'll need to let the consuming application know what's going on
       xhr.upload.addEventListener('progress', function (e) {
-          return self.@org.wisepersist.gwt.uploader.client.Uploader::uploadProgressEventCallback(Lcom/jakecode/gwt/uploader/client/File;DD)(
+          return self.@org.wisepersist.gwt.uploader.client.Uploader::uploadProgressEventCallback(Lorg/wisepersist/gwt/uploader/client/File;DD)(
               file,
               e.loaded,
               e.total);
       }, false);
       xhr.addEventListener('load', function () {
-          return self.@org.wisepersist.gwt.uploader.client.Uploader::uploadSuccessEventCallback(Lcom/jakecode/gwt/uploader/client/File;Ljava/lang/String;Ljava/lang/String;)(
+          return self.@org.wisepersist.gwt.uploader.client.Uploader::uploadSuccessEventCallback(Lorg/wisepersist/gwt/uploader/client/File;Ljava/lang/String;Ljava/lang/String;)(
               @org.wisepersist.gwt.uploader.client.Uploader::nativeUpdateFileProperties(Lcom/google/gwt/core/client/JavaScriptObject;I)(
                   file,
                   -4     // File.Status.COMPLETE
@@ -1410,7 +1410,7 @@ public class Uploader extends AbsolutePanel {
           )
       }, false);
       xhr.addEventListener('error', function () {
-          return self.@org.wisepersist.gwt.uploader.client.Uploader::uploadErrorEventCallback(Lcom/jakecode/gwt/uploader/client/File;ILjava/lang/String;)(
+          return self.@org.wisepersist.gwt.uploader.client.Uploader::uploadErrorEventCallback(Lorg/wisepersist/gwt/uploader/client/File;ILjava/lang/String;)(
               @org.wisepersist.gwt.uploader.client.Uploader::nativeUpdateFileProperties(Lcom/google/gwt/core/client/JavaScriptObject;I)(
                   file,
                   -3      // File.Status.ERROR
@@ -1420,7 +1420,7 @@ public class Uploader extends AbsolutePanel {
           )
       }, false);
       xhr.addEventListener('abort', function () {
-          return self.@org.wisepersist.gwt.uploader.client.Uploader::uploadErrorEventCallback(Lcom/jakecode/gwt/uploader/client/File;ILjava/lang/String;)(
+          return self.@org.wisepersist.gwt.uploader.client.Uploader::uploadErrorEventCallback(Lorg/wisepersist/gwt/uploader/client/File;ILjava/lang/String;)(
               @org.wisepersist.gwt.uploader.client.Uploader::nativeUpdateFileProperties(Lcom/google/gwt/core/client/JavaScriptObject;I)(
                   file,
                   -5      // File.Status.CANCELLED
@@ -2070,13 +2070,13 @@ public class Uploader extends AbsolutePanel {
       }
       if (eventHandlers['file_queued_handler']) {
           options.file_queued_handler = function (file) {
-              return self.@org.wisepersist.gwt.uploader.client.Uploader::fileQueuedEventCallback(Lcom/jakecode/gwt/uploader/client/File;)(
+              return self.@org.wisepersist.gwt.uploader.client.Uploader::fileQueuedEventCallback(Lorg/wisepersist/gwt/uploader/client/File;)(
                   file);
           };
       }
       if (eventHandlers['file_queue_error_handler']) {
           options.file_queue_error_handler = function (file, errorCode, message) {
-              return self.@org.wisepersist.gwt.uploader.client.Uploader::fileQueueErrorEventCallback(Lcom/jakecode/gwt/uploader/client/File;ILjava/lang/String;)(
+              return self.@org.wisepersist.gwt.uploader.client.Uploader::fileQueueErrorEventCallback(Lorg/wisepersist/gwt/uploader/client/File;ILjava/lang/String;)(
                   file,
                   errorCode,
                   message);
@@ -2093,13 +2093,13 @@ public class Uploader extends AbsolutePanel {
       }
       if (eventHandlers['upload_start_handler']) {
           options.upload_start_handler = function (file) {
-              return self.@org.wisepersist.gwt.uploader.client.Uploader::uploadStartEventCallback(Lcom/jakecode/gwt/uploader/client/File;)(
+              return self.@org.wisepersist.gwt.uploader.client.Uploader::uploadStartEventCallback(Lorg/wisepersist/gwt/uploader/client/File;)(
                   file);
           };
       }
       if (eventHandlers['upload_progress_handler']) {
           options.upload_progress_handler = function (file, bytesComplete, bytesTotal) {
-              return self.@org.wisepersist.gwt.uploader.client.Uploader::uploadProgressEventCallback(Lcom/jakecode/gwt/uploader/client/File;DD)(
+              return self.@org.wisepersist.gwt.uploader.client.Uploader::uploadProgressEventCallback(Lorg/wisepersist/gwt/uploader/client/File;DD)(
                   file,
                   bytesComplete,
                   bytesTotal);
@@ -2107,7 +2107,7 @@ public class Uploader extends AbsolutePanel {
       }
       if (eventHandlers['upload_error_handler']) {
           options.upload_error_handler = function (file, errorCode, message) {
-              return self.@org.wisepersist.gwt.uploader.client.Uploader::uploadErrorEventCallback(Lcom/jakecode/gwt/uploader/client/File;ILjava/lang/String;)(
+              return self.@org.wisepersist.gwt.uploader.client.Uploader::uploadErrorEventCallback(Lorg/wisepersist/gwt/uploader/client/File;ILjava/lang/String;)(
                   file,
                   errorCode,
                   message);
@@ -2115,7 +2115,7 @@ public class Uploader extends AbsolutePanel {
       }
       if (eventHandlers['upload_success_handler']) {
           options.upload_success_handler = function (file, serverData, responseReceived) {
-              return self.@org.wisepersist.gwt.uploader.client.Uploader::uploadSuccessEventCallback(Lcom/jakecode/gwt/uploader/client/File;Ljava/lang/String;Ljava/lang/String;)(
+              return self.@org.wisepersist.gwt.uploader.client.Uploader::uploadSuccessEventCallback(Lorg/wisepersist/gwt/uploader/client/File;Ljava/lang/String;Ljava/lang/String;)(
                   file,
                   responseReceived,
                   serverData);
@@ -2123,7 +2123,7 @@ public class Uploader extends AbsolutePanel {
       }
       if (eventHandlers['upload_complete_handler']) {
           options.upload_complete_handler = function (file) {
-              return self.@org.wisepersist.gwt.uploader.client.Uploader::uploadCompleteEventCallback(Lcom/jakecode/gwt/uploader/client/File;)(
+              return self.@org.wisepersist.gwt.uploader.client.Uploader::uploadCompleteEventCallback(Lorg/wisepersist/gwt/uploader/client/File;)(
                   file);
           };
       }

@@ -34,7 +34,6 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.google.gwt.user.client.ui.Widget;
 
-import org.wisepersist.gwt.uploader.client.ProgressBar;
 import org.wisepersist.gwt.uploader.client.Uploader;
 import org.wisepersist.gwt.uploader.client.events.FileDialogCompleteEvent;
 import org.wisepersist.gwt.uploader.client.events.FileDialogCompleteHandler;
@@ -50,6 +49,7 @@ import org.wisepersist.gwt.uploader.client.events.UploadErrorEvent;
 import org.wisepersist.gwt.uploader.client.events.UploadErrorHandler;
 import org.wisepersist.gwt.uploader.client.events.UploadProgressEvent;
 import org.wisepersist.gwt.uploader.client.events.UploadProgressHandler;
+import org.wisepersist.gwt.uploader.client.progress.ProgressBar;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -85,7 +85,8 @@ public class MultiUploadWithProgressBarAndDragAndDrop implements EntryPoint, Upl
         .setFileQueuedHandler(new FileQueuedHandler() {
           public boolean onFileQueued(final FileQueuedEvent fileQueuedEvent) {
             // Create a Progress Bar for this file
-            final ProgressBar progressBar = new ProgressBar(0.0, 1.0);
+            final ProgressBar progressBar =
+                new ProgressBar(0.0, 1.0, 0.0, new CancelProgressBarTextFormatter());
             progressBar.setTitle(fileQueuedEvent.getFile().getName());
             progressBar.setHeight("18px");
             progressBar.setWidth("200px");
@@ -215,5 +216,16 @@ public class MultiUploadWithProgressBarAndDragAndDrop implements EntryPoint, Upl
     horizontalPanel.setCellHorizontalAlignment(uploader, HorizontalPanel.ALIGN_LEFT);
     horizontalPanel.setCellHorizontalAlignment(progressBarPanel, HorizontalPanel.ALIGN_RIGHT);
     return horizontalPanel;
+  }
+
+  protected class CancelProgressBarTextFormatter extends ProgressBar.TextFormatter {
+
+    @Override
+    protected String getText(ProgressBar bar, double curProgress) {
+      if (curProgress < 0) {
+        return "Cancelled";
+      }
+      return ((int) (100 * bar.getPercent())) + "%";
+    }
   }
 }
