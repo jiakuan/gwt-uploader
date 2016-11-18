@@ -21,7 +21,9 @@ import com.google.gwt.user.client.ui.Widget;
 /**
  * @author delight.wjk@gmail.com
  */
-public interface UploaderPanel {
+public interface UploaderSample {
 
   Widget getUploaderPanel();
+
+  String getUploaderCode();
 }

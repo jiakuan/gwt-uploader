@@ -8,4 +8,28 @@
     <welcome-file>GwtUploaderDemo.html</welcome-file>
   </welcome-file-list>
 
+  <!--
+    This Guice listener hijacks all further filters and servlets. Extra
+    filters and servlets have to be configured in your
+    ServletModule#configureServlets() by calling
+    serve(String).with(Class<? extends HttpServlet>) and
+    filter(String).through(Class<? extends Filter)
+  -->
+  <listener>
+    <listener-class>org.wisepersist.gwt.uploader.demo.server.GuiceServletConfig</listener-class>
+  </listener>
+
+  <filter>
+    <filter-name>guiceFilter</filter-name>
+    <filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
+  </filter>
+
+  <filter-mapping>
+    <filter-name>guiceFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>INCLUDE</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>ERROR</dispatcher>
+  </filter-mapping>
 </web-app>

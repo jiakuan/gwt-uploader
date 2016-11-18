@@ -17,7 +17,6 @@
 package org.wisepersist.gwt.uploader.demo.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -43,7 +42,7 @@ import org.wisepersist.gwt.uploader.client.events.UploadSuccessHandler;
  *
  * @author delight.wjk@gmail.com
  */
-public class ImageButtonAndProgressText implements EntryPoint, UploaderPanel {
+public class ImageButtonAndProgressText implements EntryPoint, UploaderSample {
 
   private final Label progressLabel = new Label();
   private final Uploader uploader = new Uploader();
@@ -56,9 +55,8 @@ public class ImageButtonAndProgressText implements EntryPoint, UploaderPanel {
   @Override
   public Widget getUploaderPanel() {
     progressLabel.setStyleName("progressLabel");
-    uploader.setUploadURL("/DevNullUploadServlet")
-        .setButtonImageURL(
-            GWT.getModuleBaseURL() + "resources/images/buttons/upload_new_version_button.png")
+    uploader.setUploadURL("/upload")
+        .setButtonImageURL(AppResources.INSTANCE.upload().getSafeUri().asString())
         .setButtonWidth(133)
         .setButtonHeight(22)
         .setFileSizeLimit("50 MB")
@@ -124,9 +122,15 @@ public class ImageButtonAndProgressText implements EntryPoint, UploaderPanel {
 
     VerticalPanel verticalPanel = new VerticalPanel();
     verticalPanel.add(uploader);
+    verticalPanel.add(progressLabel);
     verticalPanel.setCellHorizontalAlignment(uploader, HorizontalPanel.ALIGN_LEFT);
     verticalPanel.setCellHorizontalAlignment(progressLabel, HorizontalPanel.ALIGN_LEFT);
     return verticalPanel;
+  }
+
+  @Override
+  public final String getUploaderCode() {
+    return AppResources.INSTANCE.sourceImageButtonAndProgressText().getText();
   }
 
   private void resetText() {

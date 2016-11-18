@@ -42,7 +42,7 @@ import org.wisepersist.gwt.uploader.client.events.UploadSuccessHandler;
  *
  * @author delight.wjk@gmail.com
  */
-public class TextButtonAndProgressText implements EntryPoint, UploaderPanel {
+public class TextButtonAndProgressText implements EntryPoint, UploaderSample {
 
   private Label progressLabel = new Label();
   private Uploader uploader = new Uploader();
@@ -55,7 +55,7 @@ public class TextButtonAndProgressText implements EntryPoint, UploaderPanel {
   @Override
   public Widget getUploaderPanel() {
     progressLabel.setStyleName("progressLabel");
-    uploader.setUploadURL("/DevNullUploadServlet")
+    uploader.setUploadURL("/upload")
         .setButtonText("<span class=\"buttonText\">Click to Upload</span>")
         .setButtonTextStyle(
             ".buttonText {font-family: Arial, sans-serif; font-size: 14px; color: #BB4B44}")
@@ -130,6 +130,11 @@ public class TextButtonAndProgressText implements EntryPoint, UploaderPanel {
     verticalPanel.setCellHorizontalAlignment(uploader, HorizontalPanel.ALIGN_LEFT);
     verticalPanel.setCellHorizontalAlignment(progressLabel, HorizontalPanel.ALIGN_LEFT);
     return verticalPanel;
+  }
+
+  @Override
+  public final String getUploaderCode() {
+    return AppResources.INSTANCE.sourceImageButtonAndProgressText().getText();
   }
 
   private void resetText() {

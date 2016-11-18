@@ -17,7 +17,6 @@
 package org.wisepersist.gwt.uploader.demo.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.DragLeaveEvent;
@@ -60,7 +59,7 @@ import java.util.Map;
  *
  * @author delight.wjk@gmail.com
  */
-public class MultiUploadWithProgressBarAndDragAndDrop implements EntryPoint, UploaderPanel {
+public class MultiUploadWithProgressBarAndDragAndDrop implements EntryPoint, UploaderSample {
 
   private final Uploader uploader = new Uploader();
 
@@ -74,9 +73,8 @@ public class MultiUploadWithProgressBarAndDragAndDrop implements EntryPoint, Upl
     final VerticalPanel progressBarPanel = new VerticalPanel();
     final Map<String, ProgressBar> progressBars = new LinkedHashMap<String, ProgressBar>();
     final Map<String, Image> cancelButtons = new LinkedHashMap<String, Image>();
-    uploader.setUploadURL("/DevNullUploadServlet")
-        .setButtonImageURL(
-            GWT.getModuleBaseURL() + "resources/images/buttons/upload_new_version_button.png")
+    uploader.setUploadURL("/upload")
+        .setButtonImageURL(AppResources.INSTANCE.upload().getSafeUri().asString())
         .setButtonWidth(133)
         .setButtonHeight(22)
         .setFileSizeLimit("50 MB")
@@ -93,9 +91,8 @@ public class MultiUploadWithProgressBarAndDragAndDrop implements EntryPoint, Upl
             progressBars.put(fileQueuedEvent.getFile().getId(), progressBar);
 
             // Add Cancel Button Image
-            final Image
-                cancelButton =
-                new Image(GWT.getModuleBaseURL() + "resources/images/icons/cancel.png");
+            final Image cancelButton =
+                new Image(AppResources.INSTANCE.cancel().getSafeUri().asString());
             cancelButton.setStyleName("cancelButton");
             cancelButton.addClickHandler(new ClickHandler() {
               public void onClick(ClickEvent event) {
@@ -216,6 +213,11 @@ public class MultiUploadWithProgressBarAndDragAndDrop implements EntryPoint, Upl
     horizontalPanel.setCellHorizontalAlignment(uploader, HorizontalPanel.ALIGN_LEFT);
     horizontalPanel.setCellHorizontalAlignment(progressBarPanel, HorizontalPanel.ALIGN_RIGHT);
     return horizontalPanel;
+  }
+
+  @Override
+  public final String getUploaderCode() {
+    return AppResources.INSTANCE.sourceMultiUploadWithProgressBarAndDragAndDrop().getText();
   }
 
   protected class CancelProgressBarTextFormatter extends ProgressBar.TextFormatter {

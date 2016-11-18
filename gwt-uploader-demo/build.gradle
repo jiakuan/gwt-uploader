@@ -113,6 +113,12 @@ dependencies {
     appengineSdk 'com.google.appengine:appengine-java-sdk:1.9.42'
     compile 'com.google.appengine:appengine-api-1.0-sdk:1.9.42'
 
+    // DI
+    compile 'com.google.inject:guice:4.1.0'
+    compile 'com.google.inject.extensions:guice-servlet:4.1.0'
+    compile 'com.google.inject.extensions:guice-assistedinject:4.1.0'
+    compile 'com.google.inject.extensions:guice-multibindings:4.1.0'
+
     // Google Web Toolkit
     compile 'com.google.gwt:gwt-user:2.7.0'
     compile 'com.google.gwt:gwt-dev:2.7.0'

@@ -1,43 +1,491 @@
+body, html {
+  margin: 20px 50px;
+  font-family: Arial, sans-serif;
+  font-weight: normal;
+  font-size: 12px;
+  color: #454545;
+}
+
+h1 {
+  font-size: 20px;
+  font-weight: normal;
+  color: #bb4b44;
+  margin-top: 7px;
+  margin-bottom: 7px;
+  padding-left:2px;
+}
+
+h2 {
+  font-size: 18px;
+  font-weight: normal;
+  color: #bb4b44;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-left:2px;
+}
+
+h3 {
+  font-size: 16px;
+  font-weight: normal;
+  color: #bb4b44;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-left:2px;
+}
+
+h4 {
+  font-size: 16px;
+  font-weight: normal;
+  color: #bb4b44;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+p {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+a {
+  font-weight: bold;
+  text-decoration: underline;
+  color: #bb4b44;
+}
+
+a:visited {
+  color: #BB4B44;
+}
+
+.anchor {
+  font-weight: normal;
+  text-decoration: none;
+}
+
+.headingParagraph {
+  font-style: italic;
+  color: #a7b5c4;
+  font-size: 17px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+img.centered {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+#scrollableArea {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  bottom: 26px;
+  min-width: 1001px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: #ededed url("images/body-bg.gif") repeat-y center;
+  text-align: center;
+}
+
+#headerBackground {
+  position: absolute;
+  height: 145px;
+  width: 100%;
+}
+
+#headerContainer {
+  height: 145px;
+  width: 100%;
+  position: relative;
+  z-index: 1000;
+}
+
+#header {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  height: 145px;
+  width: 1001px;
+  text-align: left;
+}
+
+#headerNav {
+  position: relative;
+  width: 700px;
+  height: 40px;
+  left: 300px;
+  top: 97px;
+}
+
+.headerCell {
+  padding-top: 3px;
+  padding-left: 17px;
+  text-align: left;
+  vertical-align: top;
+  width: 20%;
+  height: 40px;
+  white-space: nowrap;
+}
+
+.headerCellSelected {
+  background: url("images/header-cell-selected-bg.gif") repeat-x;
+}
+
+.headerMainLink, .headerMainLink:visited {
+  color: #dcdcdc;
+  font-size: 15px;
+  line-height: 18px;
+  text-decoration: none;
+  font-weight: normal;
+  display: block;
+}
+
+.headerMainLink:hover {
+  color: white;
+}
+
+.headerSubLink, .headerSubLink:visited {
+  color: #a7b5c4;
+  font-size: 11px;
+  line-height: 13px;
+  text-decoration: none;
+  font-weight: normal;
+  display: block;
+}
+
+.headerCellSelected .headerSubLink, .headerCellSelected .headerSubLink:visited {
+  color: black;
+}
+
+#content > table > tbody > tr > td > div > span {
+  display: block;
+  padding-bottom: 20px;
+  text-align: center;
+}
+
+#searchField {
+  position: relative;
+  width: 100px;
+  height: 14px;
+  background-color: black;
+  color: #dcdcdc;
+  font-size: 11px;
+  line-height: 11px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  left: 0;
+  top: -2px;
+}
+
+#bodyContainer {
+  top: 145px;
+  width: 100%;
+  background: #ededed url("images/body-bg.gif") repeat-y center;
+  /*min-height: 1160px;*/
+  /*height: 100%;*/
+}
+
+.ajaxContent {
+  padding-top: 35px;
+}
+
+.picture-left {
+  padding-right: 15px;
+}
+
+.homeLink {
+  height: 75px;
+  width: 300px;
+  top: 63px;
+  left: -41px;
+  position: absolute;
+}
+
+#body {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  width: 1001px;
+}
+
+#contentContainer {
+  width: 739px;
+}
+
+#content {
+  padding: 22px 26px 40px 46px;
+  text-align: left;
+}
+
+.contentColumnLeft {
+  padding-right: 33px;
+  font-size: 12px;
+  vertical-align: top;
+  width: 311px;
+}
+
+.contentColumnRight {
+  font-size: 12px;
+  vertical-align: top;
+
+}
+
+.contentPictureLeft {
+  /*padding-left: 33px;*/
+  width: 175px;
+}
+
+.contentPictureMid {
+  width: 175px;
+}
+
+.contentPictureRight {
+  width: 175px;
+}
+
+.contentTextRight {
+  padding-left: 35px;
+}
+
+#rightNavContainer {
+  position: absolute;
+  width: 260px;
+  top: 0;
+  right: 0;
+}
+
+#rightNav {
+  padding: 54px 18px 18px;
+  text-align: left;
+}
+
+.contentRule {
+  background: url("images/hr-content-bg.gif") repeat-x center;
+  height: 19px;
+  width: 100%;
+}
+
+.kibuyePic {
+  padding-top: 58px;
+}
+
+.mobile {
+  margin: 0 auto;
+}
+
+.moreInfo {
+  color: #bb4b44;
+  font-weight: bold;
+}
+
+.moreInfoLink {
+  font-style: italic;
+}
+
+.quoteContainer {
+  border: 2px solid #576e9a;
+}
+
+.quote {
+  padding: 0 25px;
+  font-style: italic;
+}
+
+.partnerLink {
+  font-size: 18px;
+  font-weight: normal;
+  color: #bb4b44;
+  padding-left: 2px;
+  text-decoration: none;
+  width: 168px;
+  height: 35px;
+}
+
+.partnerLink.active {
+  font-size: 18px;
+  font-weight: normal;
+  color: #ffffff;
+  padding-left: 2px;
+  text-decoration: none;
+  background-color:#bb4b44;
+  width: 168px;
+  height: 35px;
+}
+
+.partnerLink.active > a {
+  color: #ffffff;
+}
+
+.partnerName {
+  position: relative;
+  bottom: -10px;
+  left: 5px;
+}
+
+#photo {
+  text-align: center;
+  width: 166px;
+  height: 249px;
+}
+
+.photo {
+  text-align: center;
+  height: 249px;
+  width: 166px;
+  border: 2px solid #BB4B44;
+  margin-bottom: 0;
+}
+
+.rightNavHeader {
+  font-weight: bold;
+  font-size: 13px;
+  color: #393a3a;
+  margin-bottom: 8px;
+}
+
+.rightNavHeader a {
+  font-size: 16px;
+  font-variant: small-caps;
+  text-decoration: none;
+  font-weight: normal;
+  color: #bb4b44;
+}
+
+.rightNavHeaderSelected a {
+  font-size: 16px;
+  font-weight: bold;
+  color: #393a3a;
+}
+
+.rightNavMessage {
+  color: #393a3a;
+}
+
+.form-label {
+  padding-bottom: 6px;
+  padding-right: 16px;
+  padding-top: 6px;
+  vertical-align: top;
+}
+
+.form-input-select {
+  font-size: 12px;
+}
+
+.form-input-submit {
+  font-size: 12px;
+  margin-bottom: 24px;
+  margin-top: 18px;
+}
+
+.form-input-radio {
+  position: relative;
+  top: 2px;
+}
+
+.form-label-radio {
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.form-error {
+  color: #CC0000;
+}
+
+.infoTable, .featuresTable {
+  border: 1px solid #dcdcdc;
+}
+
+.infoTable th, .infoTable td {
+  border: 1px solid #dcdcdc;
+  padding: 6px;
+}
+
+.infoTable th {
+  background-color: #dcdcdc;
+}
+
+.featuresTable td {
+  border: 1px solid #dcdcdc;
+  padding: 10px;
+}
+
+.featuresTable td.label {
+  width: 100px;
+  font-size: 13px;
+  font-weight: bold;
+  vertical-align: top;
+  text-align: left;
+}
+
+.code {
+  font-family: Courier,serif;
+  background-color: #EEEEEE;
+  color: black;
+  padding-left: 30px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-right: 8px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.demo {
+  overflow: auto;
+  height: auto;
+  border: 1px solid #ccc;
+  background: #ffffff;
+  border-radius: 5px;
+  padding: 15px;
+  text-align: left;
+}
+
+.viewSourceBtn {
+  margin-top: 10px;
+  cursor: pointer;
+}
+
 .gwt-ProgressBar-shell {
-    border: 2px solid #848280;
-    background-color: #454545;
-    height: 16px;
-    width: 50%;
-    margin-left: 10px;
+  border: 2px solid #848280;
+  background-color: #454545;
+  height: 16px;
+  width: 50%;
+  margin-left: 10px;
 }
 
 .gwt-ProgressBar-shell .gwt-ProgressBar-bar {
-    background-color: #BB4B44;
+  background-color: #BB4B44;
 }
 
 .gwt-ProgressBar-shell .gwt-ProgressBar-text {
-    padding: 0;
-    margin: 0;
-    color: white;
+  padding: 0;
+  margin: 0;
+  color: white;
 }
 
 .progressLabel {
-    font-family: Arial, sans-serif;
-    font-size: 12px;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
 }
 
 .dropFilesLabel {
-    margin-top: 6px;
-    padding-top: 28px;
-    padding-bottom: 28px;
-    font-family: verdana, arial, sans-serif;
-    font-size: 12px;
-    color: #2d4b6d;
-    font-weight: bold;
-    text-align: center;
-    display: block;
-    border: 2px dashed #888888;
-    border-radius: 7px;
+  margin-top: 6px;
+  padding-top: 28px;
+  padding-bottom: 28px;
+  font-family: verdana, arial, sans-serif;
+  font-size: 12px;
+  color: #2d4b6d;
+  font-weight: bold;
+  text-align: center;
+  display: block;
+  border: 2px dashed #888888;
+  border-radius: 7px;
 }
 
 .dropFilesLabelHover {
-    border: 2px solid #444444;
-    color: #7c9647;
+  border: 2px solid #444444;
+  color: #7c9647;
 }
 
 .btnbarpanel {
@@ -48,16 +496,18 @@
 }
 
 .viewSourceBtn {
-    margin-top: 6px;
-    cursor: pointer;
+  margin-top: 6px;
+  cursor: pointer;
 }
 
 .viewSourceBtn-up {
 
 }
+
 .viewSourceBtn-up-hovering {
 
 }
+
 .viewSourceBtn-up-disabled {
 
 }
@@ -67,8 +517,8 @@
 }
 
 .cancelButton {
-    margin: 3px 0 -1px 2px;
-    cursor: pointer;
+  margin: 3px 0 -1px 2px;
+  cursor: pointer;
 }
 
 

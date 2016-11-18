@@ -17,7 +17,6 @@
 package org.wisepersist.gwt.uploader.demo.client;
 
 import com.google.gwt.core.client.EntryPoint;
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
@@ -48,13 +47,12 @@ import org.wisepersist.gwt.uploader.client.progress.ProgressBar;
  *
  * @author delight.wjk@gmail.com
  */
-public class ImageButtonAndProgressBar implements EntryPoint, UploaderPanel {
+public class ImageButtonAndProgressBar implements EntryPoint, UploaderSample {
 
   final Uploader uploader = new Uploader();
   private ProgressBar progressBar =
       new ProgressBar(0.0, 1.0, 0.0, new CancelProgressBarTextFormatter());
-  private Image cancelButton = new Image(
-      GWT.getModuleBaseURL() + "resources/images/icons/cancel.png");
+  private Image cancelButton = new Image(AppResources.INSTANCE.cancel().getSafeUri().asString());
 
   public void onModuleLoad() {
     //noinspection GwtToHtmlReferences
@@ -65,9 +63,8 @@ public class ImageButtonAndProgressBar implements EntryPoint, UploaderPanel {
   public Widget getUploaderPanel() {
     final HorizontalPanel horizontalPanel = new HorizontalPanel();
 
-    uploader.setUploadURL("/DevNullUploadServlet")
-        .setButtonImageURL(
-            GWT.getModuleBaseURL() + "resources/images/buttons/upload_new_version_button.png")
+    uploader.setUploadURL("/upload")
+        .setButtonImageURL(AppResources.INSTANCE.upload().getSafeUri().asString())
         .setButtonWidth(133)
         .setButtonHeight(22)
         .setFileSizeLimit("50 MB")
@@ -160,6 +157,11 @@ public class ImageButtonAndProgressBar implements EntryPoint, UploaderPanel {
     horizontalPanel.setVerticalAlignment(HorizontalPanel.ALIGN_MIDDLE);
     horizontalPanel.setCellHorizontalAlignment(uploader, HorizontalPanel.ALIGN_RIGHT);
     return horizontalPanel;
+  }
+
+  @Override
+  public final String getUploaderCode() {
+    return AppResources.INSTANCE.sourceImageButtonAndProgressBar().getText();
   }
 
   protected class CancelProgressBarTextFormatter extends ProgressBar.TextFormatter {
