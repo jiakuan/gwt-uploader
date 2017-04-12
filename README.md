@@ -6,6 +6,9 @@ The source code was forked from http://www.moxiegroup.com/moxieapps/gwt-uploader
 
 Please see examples with source code here: [http://gwt-uploader.appspot.com/](http://gwt-uploader.appspot.com/)
 
+* For GWT 2.7.0, please use gwt-upload 1.1.x
+* For GWT 2.8.0, please use gwt-upload 1.2.x
+
 ## What is it?
 GWT Uploader is a freely available open source GWT library that encapsulates the file upload capabilities provided by the File and XMLHttpRequest Level 2 APIs as well as the SWFUpload library.
 
@@ -42,7 +45,7 @@ To add the dependency to your `build.gradle` (for Gradle projects) or `pom.xml` 
 For Gradle projects:
 
 ```
-compile 'org.wisepersist:gwt-uploader:1.1.1'
+compile 'org.wisepersist:gwt-uploader:1.2.0'
 ```
 
 For Maven projects:
@@ -51,16 +54,16 @@ For Maven projects:
 <dependency>
     <groupId>org.wisepersist</groupId>
     <artifactId>gwt-uploader</artifactId>
-    <version>1.1.1</version>
+    <version>1.2.0</version>
 </dependency>
 ```
 
-If you would like to use the 1.1.2-SNAPSHOT release, use this configuration.
+If you would like to use the 1.2.1-SNAPSHOT release, use this configuration.
 
 For Gradle projects:
 
 ```
-compile 'org.wisepersist:gwt-uploader:1.1.2-SNAPSHOT'
+compile 'org.wisepersist:gwt-uploader:1.2.1-SNAPSHOT'
 ```
 
 For Maven projects:
@@ -69,7 +72,7 @@ For Maven projects:
 <dependency>
     <groupId>org.wisepersist</groupId>
     <artifactId>gwt-uploader</artifactId>
-    <version>1.1.2-SNAPSHOT</version>
+    <version>1.2.1-SNAPSHOT</version>
 </dependency>
 ```
 

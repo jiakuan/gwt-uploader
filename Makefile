@@ -3,7 +3,7 @@ mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 mkfile_dir :=$(shell cd $(shell dirname $(mkfile_path)); pwd)
 
 help:
-	cat Makefile.help
+	cat Makefile.txt
 
 clean:
 	cd ${mkfile_dir}/gwt-uploader && gradle clean

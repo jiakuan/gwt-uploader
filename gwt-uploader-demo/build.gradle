@@ -93,16 +93,25 @@ configurations.all {
               'com.google.inject.extensions:guice-servlet:4.1.0',
               'com.google.code.findbugs:annotations:3.0.1',
               'com.google.code.findbugs:jsr305:3.0.1',
-              'com.google.guava:guava:19.0',
+              'com.google.guava:guava:21.0',
+              'com.google.guava:guava-gwt:21.0',
+              'com.google.gwt:gwt-user:2.8.0',
               'com.googlecode.objectify:objectify:5.1.13',
               'commons-io:commons-io:2.4',
               'commons-lang:commons-lang:2.6',
+              'commons-collections:commons-collections:3.2.2',
+              'commons-codec:commons-codec:1.10',
+              'org.eclipse.jetty:jetty-util:9.2.14.v20151106',
+              'org.eclipse.jetty:jetty-io:9.2.14.v20151106',
               'org.glassfish.jersey.containers:jersey-container-servlet-core:2.23',
               'org.javassist:javassist:3.18.2-GA',
+              'org.ow2.asm:asm:5.0.3',
+              'org.ow2.asm:asm-commons:5.0.3',
               // https://github.com/ronmamo/reflections/issues/92
               'org.slf4j:slf4j-api:1.7.21',
               'org.testng:testng:6.9.10',
-              'joda-time:joda-time:2.9.4'
+              'joda-time:joda-time:2.9.4',
+              'xml-apis:xml-apis:1.4.01'
     }
 }
 
@@ -120,9 +129,9 @@ dependencies {
     compile 'com.google.inject.extensions:guice-multibindings:4.1.0'
 
     // Google Web Toolkit
-    compile 'com.google.gwt:gwt-user:2.7.0'
-    compile 'com.google.gwt:gwt-dev:2.7.0'
-    compile 'com.google.guava:guava-gwt:19.0'
+    compile 'com.google.gwt:gwt-user:2.8.0'
+    compile 'com.google.gwt:gwt-dev:2.8.0'
+    compile 'com.google.guava:guava-gwt:21.0'
 
     // Needed for GWT compile and at runtime for RequestBuilder
     // Specify two artifacts as workaround for GRADLE-1934
@@ -165,7 +174,7 @@ appengine {
 }
 
 gwt {
-    gwtVersion = '2.7.0'
+    gwtVersion = '2.8.0'
     minHeapSize = "512M";
     maxHeapSize = "1024M";
     logLevel = 'INFO'
