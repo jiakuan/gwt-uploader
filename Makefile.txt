@@ -1,12 +1,13 @@
 ---------------------------------------------------------------------
 Usage: make clean|build|release|install|publish|deploy"
 
-  clean   - clean the build folders
-  build   - build the projects
-  release - create a new release of gwt-uploader-core
-  install	- install the current Maven artifacts into local maven
-  publish - publish the latest stable release of gwt-uploader-core
-            to Maven central
-  deploy  - deploy gwt-upload-demo to remote AppEngine
+  clean           - clean the build folders
+  build           - build the projects
+  release         - create a new release of gwt-uploader-core
+  install         - install the current Maven artifacts into local maven
+  publishSnapshot - publish the latest snapshot of gwt-uploader-core
+  publish         - publish the latest stable release of gwt-uploader-core
+                    to Maven central
+  deploy          - deploy gwt-upload-demo to remote AppEngine
 
 ---------------------------------------------------------------------

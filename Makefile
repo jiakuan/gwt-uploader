@@ -23,6 +23,10 @@ install:
 	rm -rf ~/.m2/repository/org/wisepersist/gwt-uploader/
 	cd ${mkfile_dir}/gwt-uploader && gradle clean build install
 
+publishSnapshot:
+	cd ${mkfile_dir}/gwt-uploader && gradle build install uploadArchives
+	cd ${mkfile_dir}
+
 publish:
 	cd ${mkfile_dir}/gwt-uploader && git checkout tags/${LATEST_TAG} && gradle build install uploadArchives && git checkout master
 	cd ${mkfile_dir}
