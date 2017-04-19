@@ -276,6 +276,24 @@ public class Uploader extends AbsolutePanel {
       swfUpload.setUploadURL(url);
   }-*/;
 
+  private JSONObject httpHeaders = null;
+
+  /**
+    * Set the http headers to inject.
+    * <pre><code>
+    *     JSONObject httpHeaders = new JSONObject();
+    *     httpHeaeders.put("header1", new JSONString("headervalue1"));
+    *     httpHeaeders.put("header2", new JSONString("headervalue2"));
+    *     httpHeaeders.put("header3", new JSONString("headervalue3"));
+    *     uploader.setHttpHeaders("httpHeaeders");
+    * </code></pre>
+    *
+    * @param httpHeaders The headers to inject into the xhr2 request.
+    */
+  public void setHttpHeaders(JSONObject httpHeaders) {
+    this.httpHeaders = httpHeaders;
+  }
+    
   private String ajaxUploadURL;
 
   /**
@@ -1374,8 +1392,8 @@ public class Uploader extends AbsolutePanel {
       lastXMLHttpRequest =
           nativeStartAjaxUpload(nativeFile, ajaxUploadURL != null ? ajaxUploadURL : uploadURL,
                                 filePostName != null ? filePostName : "Filedata",
-                                postParams != null ? postParams.getJavaScriptObject()
-                                                   : null
+                                postParams != null ? postParams.getJavaScriptObject() : null,
+                                httpHeaders != null ? httpHeaders.getJavaScriptObject() : null
           );
     }
   }
@@ -1387,7 +1405,8 @@ public class Uploader extends AbsolutePanel {
   // See: https://developer.mozilla.org/en/Using_files_from_web_applications
   private native JavaScriptObject nativeStartAjaxUpload(JavaScriptObject file, String url,
                                                         String filePostName,
-                                                        JavaScriptObject postParams) /*-{
+                                                        JavaScriptObject postParams,
+                                                        JavaScriptObject httpHeaders) /*-{
 
       var self = this;
       var xhr = new XMLHttpRequest();
@@ -1431,6 +1450,14 @@ public class Uploader extends AbsolutePanel {
       }, false);
 
       xhr.open('POST', url, true);
+      
+      // Inject any http headers
+		  if (httpHeaders != null) {
+			    for (var key in httpHeaders) {
+				      xhr.setRequestHeader(key, httpHeaders[key]);
+			    }
+		  }      
+      
       var formData = new FormData();
       formData.append(filePostName, file);
 
