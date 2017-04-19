@@ -45,7 +45,7 @@ To add the dependency to your `build.gradle` (for Gradle projects) or `pom.xml` 
 For Gradle projects:
 
 ```
-compile 'org.wisepersist:gwt-uploader:1.2.0'
+compile 'org.wisepersist:gwt-uploader:1.2.1'
 ```
 
 For Maven projects:
@@ -54,16 +54,16 @@ For Maven projects:
 <dependency>
     <groupId>org.wisepersist</groupId>
     <artifactId>gwt-uploader</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
 </dependency>
 ```
 
-If you would like to use the 1.2.1-SNAPSHOT release, use this configuration.
+If you would like to use the 1.2.2-SNAPSHOT release, use this configuration.
 
 For Gradle projects:
 
 ```
-compile 'org.wisepersist:gwt-uploader:1.2.1-SNAPSHOT'
+compile 'org.wisepersist:gwt-uploader:1.2.2-SNAPSHOT'
 ```
 
 For Maven projects:
@@ -72,7 +72,7 @@ For Maven projects:
 <dependency>
     <groupId>org.wisepersist</groupId>
     <artifactId>gwt-uploader</artifactId>
-    <version>1.2.1-SNAPSHOT</version>
+    <version>1.2.2-SNAPSHOT</version>
 </dependency>
 ```
 
