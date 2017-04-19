@@ -1452,11 +1452,11 @@ public class Uploader extends AbsolutePanel {
       xhr.open('POST', url, true);
       
       // Inject any http headers
-		  if (httpHeaders != null) {
-			    for (var key in httpHeaders) {
-				      xhr.setRequestHeader(key, httpHeaders[key]);
-			    }
-		  }      
+      if (httpHeaders != null) {
+          for (var key in httpHeaders) {
+              xhr.setRequestHeader(key, httpHeaders[key]);
+          }
+      }
       
       var formData = new FormData();
       formData.append(filePostName, file);
