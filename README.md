@@ -7,7 +7,7 @@ The source code was forked from http://www.moxiegroup.com/moxieapps/gwt-uploader
 Please see examples with source code here: [http://gwt-uploader.appspot.com/](http://gwt-uploader.appspot.com/)
 
 * For GWT 2.7.0, please use gwt-upload 1.1.x
-* For GWT 2.8.0, please use gwt-upload 1.2.x
+* For GWT 2.8.0+, please use gwt-upload 1.2.x
 
 ## What is it?
 GWT Uploader is a freely available open source GWT library that encapsulates the file upload capabilities provided by the File and XMLHttpRequest Level 2 APIs as well as the SWFUpload library.

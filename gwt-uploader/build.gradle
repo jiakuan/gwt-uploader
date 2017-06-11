@@ -94,7 +94,7 @@ configurations.all {
 
         // force certain versions of dependencies (including transitive)
         //  *append new forced modules:
-        force 'com.google.guava:guava:21.0',
+        force 'com.google.guava:guava:22.0',
               'com.google.code.findbugs:annotations:3.0.1',
               'com.google.code.findbugs:jsr305:3.0.1'
     }
@@ -102,19 +102,19 @@ configurations.all {
 
 dependencies {
     // Google Web Toolkit
-    compile 'com.google.gwt:gwt-user:2.8.0'
-    compile 'com.google.guava:guava-gwt:21.0'
+    compile 'com.google.gwt:gwt-user:2.8.1'
+    compile 'com.google.guava:guava-gwt:22.0'
 
     // utility dependencies
-    compile 'com.google.guava:guava:21.0'
+    compile 'com.google.guava:guava:22.0'
 
     // FindBugs annotations
     compile 'com.google.code.findbugs:annotations:3.0.1'
     compile 'com.google.code.findbugs:jsr305:3.0.1'
 
     // test dependencies
-    testCompile 'org.mockito:mockito-core:2.2.7'
-    testCompile 'org.testng:testng:6.9.10'
+    testCompile 'org.mockito:mockito-core:2.8.9'
+    testCompile 'org.testng:testng:6.11'
 }
 
 jar.doFirst {

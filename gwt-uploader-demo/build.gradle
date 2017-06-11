@@ -23,13 +23,13 @@ buildscript {
         maven { url 'http://dl.bintray.com/steffenschaefer/maven' } // GWT plugin
     }
     dependencies {
-        classpath 'com.google.appengine:gradle-appengine-plugin:1.9.42'
+        classpath 'com.google.appengine:gradle-appengine-plugin:1.9.53'
 
         // https://plugins.gradle.org/plugin/com.github.kt3k.coveralls
         classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.6.3"
 
         // https://github.com/aaschmid/gradle-cpd-plugin
-        classpath 'de.aaschmid.gradle.plugins:gradle-cpd-plugin:0.5'
+        classpath 'de.aaschmid:gradle-cpd-plugin:1.0'
 
         // https://github.com/steffenschaefer/gwt-gradle-plugin
         classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
@@ -93,9 +93,9 @@ configurations.all {
               'com.google.inject.extensions:guice-servlet:4.1.0',
               'com.google.code.findbugs:annotations:3.0.1',
               'com.google.code.findbugs:jsr305:3.0.1',
-              'com.google.guava:guava:21.0',
-              'com.google.guava:guava-gwt:21.0',
-              'com.google.gwt:gwt-user:2.8.0',
+              'com.google.guava:guava:22.0',
+              'com.google.guava:guava-gwt:22.0',
+              'com.google.gwt:gwt-user:2.8.1',
               'com.googlecode.objectify:objectify:5.1.13',
               'commons-io:commons-io:2.4',
               'commons-lang:commons-lang:2.6',
@@ -109,18 +109,18 @@ configurations.all {
               'org.ow2.asm:asm-commons:5.0.3',
               // https://github.com/ronmamo/reflections/issues/92
               'org.slf4j:slf4j-api:1.7.21',
-              'org.testng:testng:6.9.10',
+              'org.testng:testng:6.11',
               'joda-time:joda-time:2.9.4',
               'xml-apis:xml-apis:1.4.01'
     }
 }
 
 dependencies {
-    compile 'org.wisepersist:gwt-uploader:1.1.1'
+    compile 'org.wisepersist:gwt-uploader:1.2.2-SNAPSHOT'
 
     // Google AppEngine related dependencies
-    appengineSdk 'com.google.appengine:appengine-java-sdk:1.9.42'
-    compile 'com.google.appengine:appengine-api-1.0-sdk:1.9.42'
+    appengineSdk 'com.google.appengine:appengine-java-sdk:1.9.53'
+    compile 'com.google.appengine:appengine-api-1.0-sdk:1.9.53'
 
     // DI
     compile 'com.google.inject:guice:4.1.0'
@@ -129,9 +129,9 @@ dependencies {
     compile 'com.google.inject.extensions:guice-multibindings:4.1.0'
 
     // Google Web Toolkit
-    compile 'com.google.gwt:gwt-user:2.8.0'
-    compile 'com.google.gwt:gwt-dev:2.8.0'
-    compile 'com.google.guava:guava-gwt:21.0'
+    compile 'com.google.gwt:gwt-user:2.8.1'
+    compile 'com.google.gwt:gwt-dev:2.8.1'
+    compile 'com.google.guava:guava-gwt:22.0'
 
     // Needed for GWT compile and at runtime for RequestBuilder
     // Specify two artifacts as workaround for GRADLE-1934
@@ -174,11 +174,14 @@ appengine {
 }
 
 gwt {
-    gwtVersion = '2.8.0'
+    gwtVersion = '2.8.1'
     minHeapSize = "512M";
     maxHeapSize = "1024M";
     logLevel = 'INFO'
     modules 'org.wisepersist.gwt.uploader.demo.GwtUploaderDemo'
+    compiler {
+        strict = true
+    }
 }
 
 compileGwt {
