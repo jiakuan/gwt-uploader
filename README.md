@@ -1,4 +1,4 @@
-# GWT Uploader
+﻿# GWT Uploader
 
 An API to enable sophisticated file upload capabilities within a GWT application.
 
@@ -17,11 +17,11 @@ Using GWT Uploader allows for enhanced file upload dialogs (multiple uploads, dr
 If the browser is capable of handling file uploads using a modern HTML5 approach, the upload is handled using pure DOM elements and Javascript events. In the case that the browser does not support the modern approach (most notably IE 9 and earlier), the GWT Uploader component instead transparently handles the uploads via the Flash-based SWFUpload library.
 
 ## Key Features
-* **Simple**:	Adds consistent file upload support to all modern browsers with a single implementation, while still supporting legacy browsers automatically.
-* **Pure Java**:	The entire set of file upload capabilities are available via GWT powered Java methods (even in the case that the SWFUpload library is used), including clean interfaces for the various runtime callbacks (no need to write any JavaScript).
-* **Customizable Interfaces**:	GWT Uploader exposes all the file upload capabilities as a GWT Widget, making it easy to create your own aesthetic for your upload controls or leave it simple and benefit from the multiple file selection and queued uploading. Convenient methods are also provided to enable file uploads via a familiar drag and drop approach.
-* **Clean Syntax**:	The API is built using fluent methods that allow you to manage the configuration options of the the upload control using syntax that is nearly as tight as JSON.
-* **Dynamic**:	GWT Uploader automatically includes the necessary plugin capabilities to expose various throughput and performance metrics of the uploads during and after an upload. Each File object has the following properties:
+* **Simple**:    Adds consistent file upload support to all modern browsers with a single implementation, while still supporting legacy browsers automatically.
+* **Pure Java**:    The entire set of file upload capabilities are available via GWT powered Java methods (even in the case that the SWFUpload library is used), including clean interfaces for the various runtime callbacks (no need to write any JavaScript).
+* **Customizable Interfaces**:    GWT Uploader exposes all the file upload capabilities as a GWT Widget, making it easy to create your own aesthetic for your upload controls or leave it simple and benefit from the multiple file selection and queued uploading. Convenient methods are also provided to enable file uploads via a familiar drag and drop approach.
+* **Clean Syntax**:    The API is built using fluent methods that allow you to manage the configuration options of the the upload control using syntax that is nearly as tight as JSON.
+* **Dynamic**:    GWT Uploader automatically includes the necessary plugin capabilities to expose various throughput and performance metrics of the uploads during and after an upload. Each File object has the following properties:
 
     * getAverageSpeed() -- Overall average upload speed, in bytes per second
     * getCurrentSpeed() -- String indicating the upload speed, in bytes per second
@@ -31,8 +31,8 @@ If the browser is capable of handling file uploads using a modern HTML5 approach
     * getTimeElapsed() -- Number of seconds passed for this upload
     * getTimeRemaining() -- Estimated remaining upload time in seconds
 These metrics allow for dynamic updates to occur in your interface, whether it's progress bars or text labels, as data is transferred for one or more files.
-* **Documented**:	Every class and method of the API is thoroughly documented, including numerous code and syntax examples throughout.
-* **Examples**:	The demonstration examples provide several [basic examples](http://gwt-uploader.appspot.com/) of upload interfaces that demonstrate the flexibility and integration opportunities available, with each example including a convenient "View Source" button that will allow you to see the code behind each implementation.
+* **Documented**:    Every class and method of the API is thoroughly documented, including numerous code and syntax examples throughout.
+* **Examples**:    The demonstration examples provide several [basic examples](http://gwt-uploader.appspot.com/) of upload interfaces that demonstrate the flexibility and integration opportunities available, with each example including a convenient "View Source" button that will allow you to see the code behind each implementation.
 
 ## Configure Maven dependency
 
@@ -45,7 +45,7 @@ To add the dependency to your `build.gradle` (for Gradle projects) or `pom.xml` 
 For Gradle projects:
 
 ```
-compile 'org.wisepersist:gwt-uploader:1.2.2'
+compile 'org.wisepersist:gwt-uploader:1.2.3'
 ```
 
 For Maven projects:
@@ -54,16 +54,16 @@ For Maven projects:
 <dependency>
     <groupId>org.wisepersist</groupId>
     <artifactId>gwt-uploader</artifactId>
-    <version>1.2.2</version>
+    <version>1.2.3</version>
 </dependency>
 ```
 
-If you would like to use the 1.2.3-SNAPSHOT release, use this configuration.
+If you would like to use the 1.2.4-SNAPSHOT release, use this configuration.
 
 For Gradle projects:
 
 ```
-compile 'org.wisepersist:gwt-uploader:1.2.3-SNAPSHOT'
+compile 'org.wisepersist:gwt-uploader:1.2.4-SNAPSHOT'
 ```
 
 For Maven projects:
@@ -72,7 +72,7 @@ For Maven projects:
 <dependency>
     <groupId>org.wisepersist</groupId>
     <artifactId>gwt-uploader</artifactId>
-    <version>1.2.3-SNAPSHOT</version>
+    <version>1.2.4-SNAPSHOT</version>
 </dependency>
 ```
 
@@ -95,7 +95,7 @@ In order to use snapshot releases you also need to add the Sonatype snapshots re
 
 ## How to use GWT Uploader?
 
-TBD
+Please see examples with source code here: http://gwt-uploader.appspot.com/
 
 ## How to contribute
 
