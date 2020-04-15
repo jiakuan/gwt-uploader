@@ -65,6 +65,7 @@ public class UploadErrorEvent extends UploadEvent {
 
   private int errorCode;
   private String message;
+  private String serverData;
 
   /**
    * This constructor is intended for internal use only.  You should not create uploader error
@@ -75,11 +76,14 @@ public class UploadErrorEvent extends UploadEvent {
    * @param errorCode The error code returned by the Uploader component in the case of an
    *                  uploader failure.
    * @param message   A human readable error message explaining the cause of the uploader failure.
+   * 
+   * @param serverData   Server response (if any).
    */
-  public UploadErrorEvent(File file, int errorCode, String message) {
+  public UploadErrorEvent(File file, int errorCode, String message, String serverData) {
     super(file);
     this.errorCode = errorCode;
     this.message = message;
+    this.serverData = serverData;
   }
 
   /**
@@ -132,4 +136,14 @@ public class UploadErrorEvent extends UploadEvent {
   public String getMessage() {
     return message;
   }
+  
+  /**
+   * Return a server response (if any).
+   *
+   * @return String
+   */
+  public String getServerData() {
+    return serverData;
+  }
+
 }

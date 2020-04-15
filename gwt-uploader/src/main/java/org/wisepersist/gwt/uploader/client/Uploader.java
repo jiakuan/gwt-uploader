@@ -1535,7 +1535,7 @@ public class Uploader extends AbsolutePanel {
             uploadErrorHandler.onUploadError(
                 new UploadErrorEvent(nativeFile.<File>cast(),
                                      UploadErrorEvent.ErrorCode.FILE_CANCELLED
-                                         .toInt(), "File Cancelled"
+                                         .toInt(), "File Cancelled", null
                 )
             );
           }
@@ -1941,7 +1941,7 @@ public class Uploader extends AbsolutePanel {
                     new UploadErrorEvent(nativeFile.<File>cast(),
                                          UploadErrorEvent.ErrorCode.UPLOAD_LIMIT_EXCEEDED
                                              .toInt(), "Exceeded upload limit of "
-                                                       + fileUploadLimit
+                                                       + fileUploadLimit, null
                     )
                 );
           }
@@ -2244,6 +2244,10 @@ public class Uploader extends AbsolutePanel {
   }
 
   private boolean uploadErrorEventCallback(File file, int errorCode, String message) {
+	  return uploadErrorEventCallback(file, errorCode, message, null);
+  }
+  
+  private boolean uploadErrorEventCallback(File file, int errorCode, String message, String serverData) {
     // If the user manually cancelled the file upload earlier (via the cancelUpload() method),
     // then we've already invoked the error handler callback if appropriate.
     if (file.getStatus() == File.Status.CANCELLED) {
@@ -2259,7 +2263,7 @@ public class Uploader extends AbsolutePanel {
     try {
       response = uploadErrorHandler == null
                  || uploadErrorHandler
-                     .onUploadError(new UploadErrorEvent(file, errorCode, message));
+                     .onUploadError(new UploadErrorEvent(file, errorCode, message, serverData));
     } finally {
       // In the case that we're running in Ajax/DOM mode (as opposed to in SWFUpload/Flash mode)
       // we need to explicitly invoke the complete handler after each file upload error.  (When
@@ -2328,7 +2332,7 @@ public class Uploader extends AbsolutePanel {
         }
       } else {
         uploadErrorEventCallback(file, UploadErrorEvent.ErrorCode.HTTP_ERROR.toInt(),
-                                 "Unsuccessful server response code of: " + responseReceived);
+                         "Unsuccessful server response code of: " + responseReceived, serverData);
       }
     } else {
       response = uploadSuccessHandler == null
