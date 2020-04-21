@@ -2032,6 +2032,21 @@ public class Uploader extends AbsolutePanel {
     return this.fileSizeLimit != 0 && fileSize > this.fileSizeLimit;
   }
 
+  /**
+   * Opens the file dialog to select a file to upload.
+   */
+  public void openFileDialog() {
+	switch(buttonAction) {
+	  case SELECT_FILES:
+        openFileDialog(fileUpload, true);
+        break;
+	  case SELECT_FILE:
+      default:
+        openFileDialog(fileUpload, false);
+        break;
+	}
+  }
+
   private void openFileDialog(FileUpload fileUpload, boolean multipleFiles) {
 
     if (multipleFiles) {
