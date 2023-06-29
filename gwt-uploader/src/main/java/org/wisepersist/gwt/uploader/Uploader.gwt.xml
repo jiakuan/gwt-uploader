@@ -5,7 +5,6 @@
 <module>
   <public path="client/resources">
     <include name="*.js"/>
-    <include name="*.swf"/>
     <include name="*.png"/>
   </public>
 

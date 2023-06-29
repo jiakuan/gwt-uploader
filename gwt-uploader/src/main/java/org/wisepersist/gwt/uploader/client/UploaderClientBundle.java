@@ -17,7 +17,6 @@
 package org.wisepersist.gwt.uploader.client;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.resources.client.TextResource;
 
 /**
  * @author delight.wjk@gmail.com
@@ -26,9 +25,4 @@ public interface UploaderClientBundle extends com.google.gwt.resources.client.Cl
 
   static final UploaderClientBundle INSTANCE = GWT.create(UploaderClientBundle.class);
 
-  @Source("resources/swfupload.js")
-  TextResource swfupload();
-
-  @Source("resources/swfupload.speed.js")
-  TextResource swfuploadSpeed();
 }

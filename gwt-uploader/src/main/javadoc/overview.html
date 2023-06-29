@@ -5,12 +5,8 @@
 </head>
 <body>
 This library provides a means to provide sophisticated file upload capabilities within a GWT application, including
-support for tracking the status, progress, and speed of each upload.  It attempts to provide the file upload capabilities
-first via HTML5 capabilities using the "XMLHttpRequest Level 2" type APIs if the browser can support them, and
-if not reverts back to embedding the <a href="http://swfupload.org/">SWFUpload</a> Flash-based mechanism
-to provide equivalent capabilities.  In either case, the API calls (and most notably the events) are identical
-to the programmer, so once you've coded your application to use the "GWT Uploader" API and event callbacks the
-upload logic should work identically independent of whether or not the browser supports the HTML5 mechanism.
+support for tracking the status, progress, and speed of each upload.  It provides file upload capabilities
+via HTML5 using the "XMLHttpRequest Level 2" type APIs which to date most browsers do. 
 The logical starting point is the {@link org.moxieapps.gwt.uploader.client.Uploader} class,
 which provides the primary GWT widget that can be used to create a GWT Uploader instance and add it to a GWT application.
 <p>
