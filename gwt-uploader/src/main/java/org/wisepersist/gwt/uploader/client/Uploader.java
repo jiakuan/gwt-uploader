@@ -20,7 +20,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.JavaScriptObject;
 import com.google.gwt.core.client.JsArray;
 import com.google.gwt.core.client.JsArrayNumber;
-import com.google.gwt.core.client.ScriptInjector;
 import com.google.gwt.dom.client.DivElement;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.InputElement;
@@ -39,9 +38,7 @@ import com.google.gwt.event.dom.client.MouseOverEvent;
 import com.google.gwt.event.dom.client.MouseOverHandler;
 import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
-import com.google.gwt.json.client.JSONBoolean;
 import com.google.gwt.json.client.JSONObject;
-import com.google.gwt.json.client.JSONString;
 import com.google.gwt.user.client.Element;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.FileUpload;
@@ -241,7 +238,6 @@ public class Uploader extends AbsolutePanel {
     return this;
   }
 
-  private boolean ajaxUploadEnabled = true;
   private String filePostName = null;
 
   /**
@@ -1086,7 +1082,7 @@ public class Uploader extends AbsolutePanel {
       this.setHeight(this.buttonHeight + "px");
     }
 
-    if (ajaxUploadEnabled && isAjaxUploadWithProgressEventsSupported()) {
+    if (isAjaxUploadWithProgressEventsSupported()) {
 
       // If the browser supports the XMLHttpRequest Level 2 type then we can just stick with a DOM/Ajax approach.
 
@@ -1362,8 +1358,7 @@ public class Uploader extends AbsolutePanel {
    *
    * @param event The native event provided by GWT that was fired when the drop occurred
    * @return An array of native file references that were dropped as part of the event,
-   * which can subsequently be passed to the
-   * {@link #addFileToQueue(com.google.gwt.core.client.JavaScriptObject)} method.
+   * which can subsequently be passed to the #addFileToQueue(com.google.gwt.core.client.JavaScriptObject)} method.
    */
   public static native JsArray<?> getDroppedFiles(NativeEvent event) /*-{
       return event.target.files || event.dataTransfer.files;

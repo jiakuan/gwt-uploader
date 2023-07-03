@@ -48,7 +48,7 @@ import java.util.Map;
 
 /**
  * Uploader Image Button with multiple file selection and GWT Progress Bars example of
- * GWT SWF Uploader.
+ * GWT Uploader.
  *
  * @author delight.wjk@gmail.com
  */
