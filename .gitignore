@@ -1,9 +1,26 @@
-*.class
+# Eclipse
+.classpath
+.project
+.settings
+.metadata
+.directory
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Mac
 .DS_Store
-**/.idea/
-**/*.iml
+.project
+.classpath
+target
+*.patch
+
+*.class
 **/.gradle/
 **/build/
+/target
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
