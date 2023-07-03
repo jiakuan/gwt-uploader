@@ -141,7 +141,7 @@ public class Uploader extends AbsolutePanel {
     private final int optionValue;
 
     public int toInt() {
-      return optionValue;
+      return this.optionValue;
     }
   }
 
@@ -170,7 +170,7 @@ public class Uploader extends AbsolutePanel {
     private final int optionValue;
 
     public int toInt() {
-      return optionValue;
+      return this.optionValue;
     }
   }
 
@@ -518,8 +518,8 @@ public class Uploader extends AbsolutePanel {
    */
   public Uploader setButtonText(String buttonText) {
     this.buttonText = buttonText;
-    if (buttonTextElement != null) {
-      buttonTextElement.setInnerHTML(buttonText);
+    if (this.buttonTextElement != null) {
+      this.buttonTextElement.setInnerHTML(buttonText);
     }
     return this;
   }
@@ -538,8 +538,8 @@ public class Uploader extends AbsolutePanel {
   public Uploader setButtonTextStyle(String buttonTextStyle) {
     this.buttonTextStyle = buttonTextStyle;
     
-    if (buttonTextStyleElement != null) {
-      buttonTextStyleElement.setInnerText(buttonTextStyle);
+    if (this.buttonTextStyleElement != null) {
+      this.buttonTextStyleElement.setInnerText(buttonTextStyle);
     }
     return this;
   }
@@ -607,12 +607,12 @@ public class Uploader extends AbsolutePanel {
   public Uploader setButtonDisabled(boolean buttonDisabled) {
     this.buttonDisabled = buttonDisabled;
 
-    if (buttonImageElement != null && buttonHeight >= 0) {
+    if (this.buttonImageElement != null && this.buttonHeight >= 0) {
       if (buttonDisabled) {
-        buttonImageElement.getStyle()
-            .setProperty("backgroundPosition", "0px -" + (buttonHeight * 3) + "px");
+        this.buttonImageElement.getStyle()
+            .setProperty("backgroundPosition", "0px -" + (this.buttonHeight * 3) + "px");
       } else {
-        buttonImageElement.getStyle().setProperty("backgroundPosition", "0px 0px");
+        this.buttonImageElement.getStyle().setProperty("backgroundPosition", "0px 0px");
       }
     }
     return this;
@@ -642,7 +642,7 @@ public class Uploader extends AbsolutePanel {
    * @return A reference to this {@link Uploader} instance for convenient method chaining.
    */
   public Uploader setButtonCursor(Cursor cursor) {
-    buttonCursor = cursor;
+    this.buttonCursor = cursor;
     return this;
   }
 
@@ -675,7 +675,7 @@ public class Uploader extends AbsolutePanel {
    * @return JSONObject
    */
   public JSONObject getCustomSettings() {
-    return customSettings;
+    return this.customSettings;
   }
 
   private Stats stats;
@@ -687,10 +687,10 @@ public class Uploader extends AbsolutePanel {
    * @return Stats
    */
   public Stats getStats() {
-    if (stats == null) {
-      stats = (Stats) JavaScriptObject.createObject();
+    if (this.stats == null) {
+      this.stats = (Stats) JavaScriptObject.createObject();
     }
-    return stats;
+    return this.stats;
   }
 
   private FileDialogStartHandler fileDialogStartHandler;
@@ -828,15 +828,15 @@ public class Uploader extends AbsolutePanel {
    * Cause the first file in the queue to start the uploader process.
    */
   public void startUpload() {
-    if (uploadURL == null) {
+    if (this.uploadURL == null) {
       throw new IllegalStateException(
           "The 'startUpload()' method was invoked before the uploader URL was provided.  "
           + "Please call the 'setUploadURL' first."
       );
     }
 
-    if (nativeFilesQueued.size() > 0) {
-      JavaScriptObject nativeFile = nativeFilesQueued.get(0);
+    if (this.nativeFilesQueued.size() > 0) {
+      JavaScriptObject nativeFile = this.nativeFilesQueued.get(0);
 
       // Initialize properties on Start
       nativeSetProperty(nativeFile, "startTime", System.currentTimeMillis());
@@ -847,19 +847,19 @@ public class Uploader extends AbsolutePanel {
 
       //we need to fire it manually for the Ajax/XMLHttpRequest Level 2 case
       nativeUpdateFileProperties(nativeFile, File.Status.IN_PROGRESS.toInt());
-      if (uploadStartHandler != null) {
-        uploadStartHandler.onUploadStart(new UploadStartEvent(nativeFile.<File>cast()));
+      if (this.uploadStartHandler != null) {
+        this.uploadStartHandler.onUploadStart(new UploadStartEvent(nativeFile.<File>cast()));
       }
 
       // Let any registered progress handlers know that we're starting at the beginning
       uploadProgressEventCallback(nativeFile.<File>cast(), 0.0,
-                                  (double) nativeFile.<File>cast().getSize());
+                                  nativeFile.<File>cast().getSize());
 
-      lastXMLHttpRequest =
-          nativeStartAjaxUpload(nativeFile, ajaxUploadURL != null ? ajaxUploadURL : uploadURL,
-                                filePostName != null ? filePostName : "Filedata",
-                                postParams != null ? postParams.getJavaScriptObject() : null,
-                                httpHeaders != null ? httpHeaders.getJavaScriptObject() : null
+      this.lastXMLHttpRequest =
+          nativeStartAjaxUpload(nativeFile, this.ajaxUploadURL != null ? this.ajaxUploadURL : this.uploadURL,
+                                this.filePostName != null ? this.filePostName : "Filedata",
+                                this.postParams != null ? this.postParams.getJavaScriptObject() : null,
+                                this.httpHeaders != null ? this.httpHeaders.getJavaScriptObject() : null
           );
     }
   }
@@ -943,20 +943,20 @@ public class Uploader extends AbsolutePanel {
    * @param triggerErrorEvent if true, an uploadError event will be issued
    */
   public void cancelUpload(String fileId, boolean triggerErrorEvent) {
-      JavaScriptObject nativeFile = nativeFilesQueuedById.get(fileId);
+      JavaScriptObject nativeFile = this.nativeFilesQueuedById.get(fileId);
       if (nativeFile != null) {
 
         boolean cancelledActiveUpload = false;
 
         // If the file being cancelled was currently in the process of being uploaded, then cancel
         // the current XMLHttpRequest as well
-        if (nativeFilesQueued.size() > 0 && lastXMLHttpRequest != null) {
-          final File currentFile = nativeFilesQueued.get(0).cast();
+        if (this.nativeFilesQueued.size() > 0 && this.lastXMLHttpRequest != null) {
+          final File currentFile = this.nativeFilesQueued.get(0).cast();
           if (nativeFile.<File>cast().getId().equals(currentFile.getId())
               && currentFile.getStatus() == File.Status.IN_PROGRESS) {
             try {
               cancelledActiveUpload = true;
-              nativeAbortXMLHttpRequest(lastXMLHttpRequest);
+              nativeAbortXMLHttpRequest(this.lastXMLHttpRequest);
             } catch (Throwable t) {
               // Purposefully ignoring any problems that may occur when aborting the XMLHttpRequest
               GWT.log(t.getMessage());
@@ -971,8 +971,8 @@ public class Uploader extends AbsolutePanel {
 
         if (triggerErrorEvent) {
           nativeSetProperty(getStats(), "upload_errors", getStats().getUploadErrors() + 1);
-          if (uploadErrorHandler != null) {
-            uploadErrorHandler.onUploadError(
+          if (this.uploadErrorHandler != null) {
+            this.uploadErrorHandler.onUploadError(
                 new UploadErrorEvent(nativeFile.<File>cast(),
                                      UploadErrorEvent.ErrorCode.FILE_CANCELLED
                                          .toInt(), "File Cancelled", null
@@ -989,9 +989,9 @@ public class Uploader extends AbsolutePanel {
         } else {
           // If we're not cancelling the file upload that was in progress, then we need to handle
           // pulling it out of the internal queue and statistics on our own
-          nativeFilesQueued.remove(nativeFile);
-          nativeFilesQueuedById.remove(nativeFile.<File>cast().getId());
-          nativeSetProperty(getStats(), "files_queued", nativeFilesQueued.size());
+          this.nativeFilesQueued.remove(nativeFile);
+          this.nativeFilesQueuedById.remove(nativeFile.<File>cast().getId());
+          nativeSetProperty(getStats(), "files_queued", this.nativeFilesQueued.size());
           nativeSetProperty(getStats(), "in_progress", 0);
         }
       }
@@ -1005,8 +1005,8 @@ public class Uploader extends AbsolutePanel {
    * Cancel the first file in the queue.
    */
   public void cancelUpload() {
-      if (nativeFilesQueued.size() > 0) {
-        cancelUpload(nativeFilesQueued.get(0).<File>cast().getId());
+      if (this.nativeFilesQueued.size() > 0) {
+        cancelUpload(this.nativeFilesQueued.get(0).<File>cast().getId());
       }
   }
 
@@ -1026,8 +1026,8 @@ public class Uploader extends AbsolutePanel {
    * @param triggerErrorEvent if true, an uploadError event will be issued
    */
   public void cancelUpload(boolean triggerErrorEvent) {
-      if (nativeFilesQueued.size() > 0) {
-        cancelUpload(nativeFilesQueued.get(0).<File>cast().getId(), triggerErrorEvent);
+      if (this.nativeFilesQueued.size() > 0) {
+        cancelUpload(this.nativeFilesQueued.get(0).<File>cast().getId(), triggerErrorEvent);
       }
   }
 
@@ -1069,10 +1069,10 @@ public class Uploader extends AbsolutePanel {
 
   @Override
   protected void onLoad() {
-    if (loaded) {
+    if (this.loaded) {
       return;
     }
-    loaded = true;
+    this.loaded = true;
 
     // Make sure our entire panel fits the size that they wanted for the button
     if (this.buttonWidth >= 0) {
@@ -1108,52 +1108,57 @@ public class Uploader extends AbsolutePanel {
 
       // Setup what we want to happen when someone clicks anywhere on the button
       button.addClickHandler(new ClickHandler() {
+        @Override
         public void onClick(ClickEvent event) {
-          if (buttonDisabled) {
+          if (Uploader.this.buttonDisabled) {
             return;
           }
-          switch (buttonAction) {
+          switch (Uploader.this.buttonAction) {
             case START_UPLOAD:
               startUpload();
               break;
             case SELECT_FILES:
-              openFileDialog(fileUpload, true);
+              openFileDialog(Uploader.this.fileUpload, true);
               break;
             case SELECT_FILE:
             default:
-              openFileDialog(fileUpload, false);
+              openFileDialog(Uploader.this.fileUpload, false);
               break;
           }
         }
       });
 
       button.addMouseOverHandler(new MouseOverHandler() {
+        @Override
         public void onMouseOver(MouseOverEvent event) {
-          if (buttonImageURL != null && buttonHeight >= 0 && !buttonDisabled) {
-            buttonImageElement.getStyle()
-                .setProperty("backgroundPosition", "0px -" + buttonHeight + "px");
+          if (Uploader.this.buttonImageURL != null && Uploader.this.buttonHeight >= 0 && !Uploader.this.buttonDisabled) {
+            Uploader.this.buttonImageElement.getStyle()
+                .setProperty("backgroundPosition", "0px -" + Uploader.this.buttonHeight + "px");
           }
         }
       });
       button.addMouseOutHandler(new MouseOutHandler() {
+        @Override
         public void onMouseOut(MouseOutEvent event) {
-          if (buttonImageURL != null && buttonHeight >= 0 && !buttonDisabled) {
-            buttonImageElement.getStyle().setProperty("backgroundPosition", "0px 0px");
+          if (Uploader.this.buttonImageURL != null && Uploader.this.buttonHeight >= 0 && !Uploader.this.buttonDisabled) {
+            Uploader.this.buttonImageElement.getStyle().setProperty("backgroundPosition", "0px 0px");
           }
         }
       });
       button.addMouseDownHandler(new MouseDownHandler() {
+        @Override
         public void onMouseDown(MouseDownEvent event) {
-          if (buttonImageURL != null && buttonHeight >= 0 && !buttonDisabled) {
-            buttonImageElement.getStyle()
-                .setProperty("backgroundPosition", "0px -" + (buttonHeight * 2) + "px");
+          if (Uploader.this.buttonImageURL != null && Uploader.this.buttonHeight >= 0 && !Uploader.this.buttonDisabled) {
+            Uploader.this.buttonImageElement.getStyle()
+                .setProperty("backgroundPosition", "0px -" + (Uploader.this.buttonHeight * 2) + "px");
           }
         }
       });
       button.addMouseUpHandler(new MouseUpHandler() {
+        @Override
         public void onMouseUp(MouseUpEvent event) {
-          if (buttonImageURL != null && buttonHeight >= 0 && !buttonDisabled) {
-            buttonImageElement.getStyle().setProperty("backgroundPosition", "0px 0px");
+          if (Uploader.this.buttonImageURL != null && Uploader.this.buttonHeight >= 0 && !Uploader.this.buttonDisabled) {
+            Uploader.this.buttonImageElement.getStyle().setProperty("backgroundPosition", "0px 0px");
           }
         }
       });
@@ -1161,36 +1166,36 @@ public class Uploader extends AbsolutePanel {
       // Depending on the way they wanted the uploader button rendered, create the appropriate
       // elements in the DOM that the user will click on.
       if (this.buttonTextStyle != null) {
-        buttonTextStyleElement = Document.get().createStyleElement();
-        buttonTextStyleElement.setInnerText(this.buttonTextStyle);
-        button.getElement().appendChild(buttonTextStyleElement);
+        this.buttonTextStyleElement = Document.get().createStyleElement();
+        this.buttonTextStyleElement.setInnerText(this.buttonTextStyle);
+        button.getElement().appendChild(this.buttonTextStyleElement);
       }
       if (this.buttonText != null) {
-        buttonTextElement = Document.get().createDivElement();
-        buttonTextElement.setInnerHTML(this.buttonText);
-        buttonTextElement.getStyle().setWidth(100, Style.Unit.PCT);
-        buttonTextElement.getStyle().setHeight(100, Style.Unit.PCT);
+        this.buttonTextElement = Document.get().createDivElement();
+        this.buttonTextElement.setInnerHTML(this.buttonText);
+        this.buttonTextElement.getStyle().setWidth(100, Style.Unit.PCT);
+        this.buttonTextElement.getStyle().setHeight(100, Style.Unit.PCT);
         if (this.buttonTextLeftPadding > Integer.MIN_VALUE) {
-          buttonTextElement.getStyle().setPaddingLeft(this.buttonTextLeftPadding, Style.Unit.PX);
+          this.buttonTextElement.getStyle().setPaddingLeft(this.buttonTextLeftPadding, Style.Unit.PX);
         }
         if (this.buttonTextTopPadding > Integer.MIN_VALUE) {
-          buttonTextElement.getStyle().setPaddingTop(this.buttonTextTopPadding, Style.Unit.PX);
+          this.buttonTextElement.getStyle().setPaddingTop(this.buttonTextTopPadding, Style.Unit.PX);
         }
-        button.getElement().appendChild(buttonTextElement);
+        button.getElement().appendChild(this.buttonTextElement);
       }
 
       if (this.buttonImageURL != null) {
-        buttonImageElement = Document.get().createDivElement();
-        buttonImageElement.getStyle().setBackgroundImage("url(\"" + this.buttonImageURL + "\")");
+        this.buttonImageElement = Document.get().createDivElement();
+        this.buttonImageElement.getStyle().setBackgroundImage("url(\"" + this.buttonImageURL + "\")");
         if (this.buttonDisabled) {
-          buttonImageElement.getStyle()
-              .setProperty("backgroundPosition", "0px -" + (buttonHeight * 3) + "px");
+          this.buttonImageElement.getStyle()
+              .setProperty("backgroundPosition", "0px -" + (this.buttonHeight * 3) + "px");
         } else {
-          buttonImageElement.getStyle().setProperty("backgroundPosition", "0px 0px");
+          this.buttonImageElement.getStyle().setProperty("backgroundPosition", "0px 0px");
         }
-        buttonImageElement.getStyle().setWidth(100, Style.Unit.PCT);
-        buttonImageElement.getStyle().setHeight(100, Style.Unit.PCT);
-        button.getElement().appendChild(buttonImageElement);
+        this.buttonImageElement.getStyle().setWidth(100, Style.Unit.PCT);
+        this.buttonImageElement.getStyle().setHeight(100, Style.Unit.PCT);
+        button.getElement().appendChild(this.buttonImageElement);
       }
 
       // Add the entire button to the DOM
@@ -1198,8 +1203,8 @@ public class Uploader extends AbsolutePanel {
 
     } else {
         
-        if (uploadErrorHandler != null) {
-            uploadErrorHandler.onUploadError(
+        if (this.uploadErrorHandler != null) {
+            this.uploadErrorHandler.onUploadError(
                 new UploadErrorEvent(null,
                                      UploadErrorEvent.ErrorCode.SECURITY_ERROR
                                          .toInt(), "No HTML5 supported!", null
@@ -1212,13 +1217,13 @@ public class Uploader extends AbsolutePanel {
   }
 
   private FileUpload createFileUpload() {
-    fileUpload = new FileUpload();
-    fileUpload.getElement().getStyle().setDisplay(Style.Display.NONE);
+    this.fileUpload = new FileUpload();
+    this.fileUpload.getElement().getStyle().setDisplay(Style.Display.NONE);
 
-    if (fileTypes != null) {
+    if (this.fileTypes != null) {
       // Convert the format that the SWFUpload/Flash parameter expects to the W3C DOM standard
       // See: http://dev.w3.org/html5/spec/states-of-the-type-attribute.html#attr-input-accept
-      fileUpload.getElement()
+      this.fileUpload.getElement()
           .setAttribute("accept", this.fileTypes.replaceAll("\\;", ",").replaceAll("\\*\\.", "."));
 
       // TODO(jake): Need to consider validation of this in the file queued handler as well,
@@ -1227,29 +1232,30 @@ public class Uploader extends AbsolutePanel {
 
     final AbsolutePanel panel = this;
 
-    fileUpload.addChangeHandler(new ChangeHandler() {
-      public void onChange(ChangeEvent event) {
+    this.fileUpload.addChangeHandler(new ChangeHandler() {
+      @Override
+    public void onChange(ChangeEvent event) {
 
-        JsArray<?> selectedFiles = nativeGetSelectedFiles(fileUpload.getElement());
+        JsArray<?> selectedFiles = nativeGetSelectedFiles(Uploader.this.fileUpload.getElement());
 
         // Every time a file is selected replace the FileUpload component running in the DOM so that
         // the user can continue to attempt uploading the same file multiple times (otherwise the
         // "ChangeHandler" never fires)
-        panel.remove(fileUpload);
+        panel.remove(Uploader.this.fileUpload);
         panel.add(createFileUpload());
 
         addFilesToQueue(selectedFiles);
 
       }
     });
-    return fileUpload;
+    return this.fileUpload;
   }
 
   private long lastFileId = 0;
 
   private String getNextFileId() {
-    lastFileId++;
-    return "Uploader_" + lastFileId;
+    this.lastFileId++;
+    return "Uploader_" + this.lastFileId;
   }
 
   /**
@@ -1279,26 +1285,26 @@ public class Uploader extends AbsolutePanel {
         JavaScriptObject nativeFile = files.get(i);
 
         // Make sure our maximum allowable queue size upload limit has not been exceeded
-        if (nativeFilesQueued.size() >= fileQueueLimit) {
+        if (this.nativeFilesQueued.size() >= this.fileQueueLimit) {
           fileQueueErrorEventCallback(nativeFile.<File>cast(),
                                       FileQueueErrorEvent.ErrorCode.QUEUE_LIMIT_EXCEEDED.toInt(),
                                       "Exceeded file queue size limit of "
-                                      + fileQueueLimit
+                                      + this.fileQueueLimit
           );
           break;
         }
-        if (fileUploadLimit > 0 && totalFilesUploaded >= fileUploadLimit) {
+        if (this.fileUploadLimit > 0 && this.totalFilesUploaded >= this.fileUploadLimit) {
 
           // Keep the global stats up to date
           nativeSetProperty(getStats(), "upload_errors", getStats().getUploadErrors() + 1);
 
-          if (uploadErrorHandler != null) {
-            uploadErrorHandler
+          if (this.uploadErrorHandler != null) {
+            this.uploadErrorHandler
                 .onUploadError(
                     new UploadErrorEvent(nativeFile.<File>cast(),
                                          UploadErrorEvent.ErrorCode.UPLOAD_LIMIT_EXCEEDED
                                              .toInt(), "Exceeded upload limit of "
-                                                       + fileUploadLimit, null
+                                                       + this.fileUploadLimit, null
                     )
                 );
           }
@@ -1333,10 +1339,10 @@ public class Uploader extends AbsolutePanel {
     }
 
     // If requested, notify the app each time the user has finished selecting a bunch of files
-    if (fileDialogCompleteHandler != null) {
-      fileDialogCompleteHandler
+    if (this.fileDialogCompleteHandler != null) {
+      this.fileDialogCompleteHandler
           .onFileDialogComplete(new FileDialogCompleteEvent(files != null ? files.length() : 0,
-                                                            filesQueued, nativeFilesQueued.size()));
+                                                            filesQueued, this.nativeFilesQueued.size()));
     }
   }
 
@@ -1366,15 +1372,15 @@ public class Uploader extends AbsolutePanel {
 
   private void addFileToQueue(JavaScriptObject nativeFile) {
     // Track each of the files that still need to be uploaded
-    nativeFilesQueued.add(nativeFile);
-    nativeFilesQueuedById.put(nativeFile.<File>cast().getId(), nativeFile);
+    this.nativeFilesQueued.add(nativeFile);
+    this.nativeFilesQueuedById.put(nativeFile.<File>cast().getId(), nativeFile);
 
     // need to keep the global stats up to date manually
-    nativeSetProperty(getStats(), "files_queued", nativeFilesQueued.size());
+    nativeSetProperty(getStats(), "files_queued", this.nativeFilesQueued.size());
 
     // If requested, notify the app each time a new file is added to the queue
-    if (fileQueuedHandler != null) {
-      fileQueuedHandler.onFileQueued(
+    if (this.fileQueuedHandler != null) {
+      this.fileQueuedHandler.onFileQueued(
           new FileQueuedEvent(
               nativeUpdateFileProperties(nativeFile,
                                          File.Status.QUEUED.toInt()).<File>cast()
@@ -1396,49 +1402,49 @@ public class Uploader extends AbsolutePanel {
       fileUpload.getElement().removeAttribute("multiple");
     }
 
-    if (fileDialogStartHandler != null) {
-      fileDialogStartHandler.onFileDialogStartEvent(new FileDialogStartEvent());
+    if (this.fileDialogStartHandler != null) {
+      this.fileDialogStartHandler.onFileDialogStartEvent(new FileDialogStartEvent());
     }
     InputElement.as(fileUpload.getElement()).click();
   }
 
   @Override
   protected void onUnload() {
-    buttonTextStyleElement = null;
-    buttonTextElement = null;
-    buttonImageElement = null;
+    this.buttonTextStyleElement = null;
+    this.buttonTextElement = null;
+    this.buttonImageElement = null;
   }
 
   private boolean fileDialogStartEventCallback() {
-    return fileDialogStartHandler == null || fileDialogStartHandler
+    return this.fileDialogStartHandler == null || this.fileDialogStartHandler
         .onFileDialogStartEvent(new FileDialogStartEvent());
   }
 
   private boolean fileQueuedEventCallback(File file) {
-    return fileQueuedHandler == null || fileQueuedHandler.onFileQueued(new FileQueuedEvent(file));
+    return this.fileQueuedHandler == null || this.fileQueuedHandler.onFileQueued(new FileQueuedEvent(file));
   }
 
   private boolean fileQueueErrorEventCallback(File file, int errorCode, String message) {
     // Keep the global stats up to date 
     nativeSetProperty(getStats(), "queue_errors", getStats().getQueueErrors() + 1);
 
-    return fileQueueErrorHandler == null
-           || fileQueueErrorHandler
+    return this.fileQueueErrorHandler == null
+           || this.fileQueueErrorHandler
                .onFileQueueError(new FileQueueErrorEvent(file, errorCode, message));
   }
 
   private boolean fileDialogCompleteEventCallback(int numberOfFilesSelected,
                                                   int numberOfFilesQueued,
                                                   int totalFilesInQueue) {
-    return fileDialogCompleteHandler == null
-           || fileDialogCompleteHandler
+    return this.fileDialogCompleteHandler == null
+           || this.fileDialogCompleteHandler
                .onFileDialogComplete(new FileDialogCompleteEvent(numberOfFilesSelected,
                                                                  numberOfFilesQueued,
                                                                  totalFilesInQueue));
   }
 
   private boolean uploadStartEventCallback(File file) {
-    return uploadStartHandler == null || uploadStartHandler
+    return this.uploadStartHandler == null || this.uploadStartHandler
         .onUploadStart(new UploadStartEvent(file));
   }
 
@@ -1478,8 +1484,8 @@ public class Uploader extends AbsolutePanel {
                         (bytesTotal - bytesComplete) / (bytesComplete / elapsedTime));
 
 
-    return uploadProgressHandler == null
-           || uploadProgressHandler
+    return this.uploadProgressHandler == null
+           || this.uploadProgressHandler
                .onUploadProgress(
                    new UploadProgressEvent(file, (long) bytesComplete, (long) bytesTotal));
   }
@@ -1500,8 +1506,8 @@ public class Uploader extends AbsolutePanel {
 
     boolean response;
     try {
-      response = uploadErrorHandler == null
-                 || uploadErrorHandler
+      response = this.uploadErrorHandler == null
+                 || this.uploadErrorHandler
                      .onUploadError(new UploadErrorEvent(file, errorCode, message, serverData));
     } finally {
       // We're running in Ajax/DOM mode so we need to explicitly invoke the complete handler after each file upload error.
@@ -1509,7 +1515,7 @@ public class Uploader extends AbsolutePanel {
           uploadCompleteEventCallback(file);
         } finally {
           // Similarly, we need to handle the requeue error logic manually
-          if (requeueOnError && errorCode != File.Status.CANCELLED.toInt()) {
+          if (this.requeueOnError && errorCode != File.Status.CANCELLED.toInt()) {
             addFileToQueue(file);
           }
         }
@@ -1524,11 +1530,11 @@ public class Uploader extends AbsolutePanel {
 
       // call the success handler if the response code is one of the expected type, otherwise
       // call the error handler
-      if (httpSuccess == null) {
-        httpSuccess = new long[]{200};
+      if (this.httpSuccess == null) {
+        this.httpSuccess = new long[]{200};
       }
       boolean success = false;
-      for (long code : httpSuccess) {
+      for (long code : this.httpSuccess) {
         String codeStr = code + "";
         if (codeStr.equals(responseReceived)) {
           success = true;
@@ -1541,7 +1547,7 @@ public class Uploader extends AbsolutePanel {
           // then don't allow the success handler to be invoked (but still allow the complete
           // handler to run)
           if (file.getStatus() != File.Status.CANCELLED) {
-            totalFilesUploaded++;
+            this.totalFilesUploaded++;
 
             // If the file upload was super quick, we may not have gotten any progress events.  So,
             // let anyone who cares know that we've made it to a 100% successfully with this file
@@ -1551,8 +1557,8 @@ public class Uploader extends AbsolutePanel {
             nativeSetProperty(getStats(), "successful_uploads",
                               getStats().getSuccessfulUploads() + 1);
 
-            response = uploadSuccessHandler == null
-                       || uploadSuccessHandler
+            response = this.uploadSuccessHandler == null
+                       || this.uploadSuccessHandler
                            .onUploadSuccess(
                                new UploadSuccessEvent(file, serverData, responseReceived));
           }
@@ -1570,17 +1576,17 @@ public class Uploader extends AbsolutePanel {
   }
 
   private boolean uploadCompleteEventCallback(File file) {
-    if (nativeFilesQueued.size() > 0) {
-      final JavaScriptObject nativeFile = nativeFilesQueued.get(0);
-      nativeFilesQueued.remove(nativeFile);
-      nativeFilesQueuedById.remove(nativeFile.<File>cast().getId());
+    if (this.nativeFilesQueued.size() > 0) {
+      final JavaScriptObject nativeFile = this.nativeFilesQueued.get(0);
+      this.nativeFilesQueued.remove(nativeFile);
+      this.nativeFilesQueuedById.remove(nativeFile.<File>cast().getId());
     }
 
     // Keep the global stats up to date 
-    nativeSetProperty(getStats(), "files_queued", nativeFilesQueued.size());
+    nativeSetProperty(getStats(), "files_queued", this.nativeFilesQueued.size());
     nativeSetProperty(getStats(), "in_progress", 0);
 
-    return uploadCompleteHandler == null || uploadCompleteHandler
+    return this.uploadCompleteHandler == null || this.uploadCompleteHandler
         .onUploadComplete(new UploadCompleteEvent(file));
   }
 
