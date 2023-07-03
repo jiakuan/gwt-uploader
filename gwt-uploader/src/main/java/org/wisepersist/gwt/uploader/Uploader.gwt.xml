@@ -8,7 +8,7 @@
     <include name="*.png"/>
   </public>
 
-  <inherits name='com.google.gwt.user.User'/>
+  <inherits name="com.google.gwt.user.User"/>
   <inherits name="com.google.gwt.json.JSON"/>
 
   <source path="client"/>

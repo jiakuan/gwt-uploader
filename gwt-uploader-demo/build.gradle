@@ -23,13 +23,13 @@ buildscript {
         maven { url 'http://dl.bintray.com/steffenschaefer/maven' } // GWT plugin
     }
     dependencies {
-        classpath 'com.google.appengine:gradle-appengine-plugin:1.9.53'
+        classpath 'com.google.appengine:gradle-appengine-plugin:1.9.59'
 
         // https://plugins.gradle.org/plugin/com.github.kt3k.coveralls
-        classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.6.3"
+        classpath("gradle.plugin.org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.12.2")
 
         // https://github.com/aaschmid/gradle-cpd-plugin
-        classpath 'de.aaschmid:gradle-cpd-plugin:1.0'
+        classpath "de.aaschmid:gradle-cpd-plugin:2.0"
 
         // https://github.com/steffenschaefer/gwt-gradle-plugin
         classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
@@ -52,8 +52,8 @@ repositories {
     maven { url 'http://oss.sonatype.org/content/repositories/snapshots' }
 }
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 project.extensions.idea.module.iml {
     withXml {
@@ -93,11 +93,13 @@ configurations.all {
               'com.google.inject.extensions:guice-servlet:4.1.0',
               'com.google.code.findbugs:annotations:3.0.1',
               'com.google.code.findbugs:jsr305:3.0.1',
-              'com.google.guava:guava:22.0',
-              'com.google.guava:guava-gwt:22.0',
-              'com.google.gwt:gwt-user:2.8.1',
+              'com.google.guava:guava:30.1.1-jre',
+              'com.google.guava:guava-gwt:30.1.1-jre',
+              'org.gwtproject:gwt-user:2.10.0',
+              'org.gwtproject:gwt-codeserver:2.10.0',
               'com.googlecode.objectify:objectify:5.1.13',
-              'commons-io:commons-io:2.4',
+              'com.google.jsinterop:jsinterop-annotations:2.0.0',
+              'commons-io:commons-io:2.7',
               'commons-lang:commons-lang:2.6',
               'commons-collections:commons-collections:3.2.2',
               'commons-codec:commons-codec:1.10',
@@ -105,8 +107,8 @@ configurations.all {
               'org.eclipse.jetty:jetty-io:9.2.14.v20151106',
               'org.glassfish.jersey.containers:jersey-container-servlet-core:2.23',
               'org.javassist:javassist:3.18.2-GA',
-              'org.ow2.asm:asm:5.0.3',
-              'org.ow2.asm:asm-commons:5.0.3',
+              'org.ow2.asm:asm:9.2',
+              'org.ow2.asm:asm-commons:9.2',
               // https://github.com/ronmamo/reflections/issues/92
               'org.slf4j:slf4j-api:1.7.21',
               'org.testng:testng:6.11',
@@ -117,10 +119,11 @@ configurations.all {
 
 dependencies {
     compile 'org.wisepersist:gwt-uploader:1.2.4-SNAPSHOT'
+    compile 'org.gwtproject:gwt-codeserver:2.10.0'
 
     // Google AppEngine related dependencies
-    appengineSdk 'com.google.appengine:appengine-java-sdk:1.9.53'
-    compile 'com.google.appengine:appengine-api-1.0-sdk:1.9.53'
+    appengineSdk 'com.google.appengine:appengine-java-sdk:1.9.59'
+    compile 'com.google.appengine:appengine-api-1.0-sdk:1.9.59'
 
     // DI
     compile 'com.google.inject:guice:4.1.0'
@@ -129,9 +132,9 @@ dependencies {
     compile 'com.google.inject.extensions:guice-multibindings:4.1.0'
 
     // Google Web Toolkit
-    compile 'com.google.gwt:gwt-user:2.8.1'
-    compile 'com.google.gwt:gwt-dev:2.8.1'
-    compile 'com.google.guava:guava-gwt:22.0'
+    compile 'org.gwtproject:gwt-user:2.10.0'
+    compile 'org.gwtproject:gwt-dev:2.10.0'
+    compile 'com.google.guava:guava-gwt:30.1.1-jre'
 
     // Needed for GWT compile and at runtime for RequestBuilder
     // Specify two artifacts as workaround for GRADLE-1934
@@ -174,7 +177,7 @@ appengine {
 }
 
 gwt {
-    gwtVersion = '2.8.1'
+    gwtVersion = '2.10.0'
     minHeapSize = "512M";
     maxHeapSize = "1024M";
     logLevel = 'INFO'
@@ -207,8 +210,8 @@ sourceSets.main.resources.srcDir 'src/main/java'
 sourceSets.test.resources.srcDir 'src/test/java'
 
 configurations {
-    runtime.exclude group: "com.google.gwt", module: "gwt-user"
-    runtime.exclude group: "com.google.gwt", module: "gwt-dev"
+    runtime.exclude group: "org.gwtproject", module: "gwt-user"
+    runtime.exclude group: "org.gwtproject", module: "gwt-dev"
 }
 
 // changes the logging level to INFO for all Ant targets

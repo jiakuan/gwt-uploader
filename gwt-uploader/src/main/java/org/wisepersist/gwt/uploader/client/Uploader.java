@@ -111,6 +111,10 @@ public class Uploader extends AbsolutePanel {
   private static final int BYTES_PER_GIGABYTE = BYTES_PER_MEGABYTE * 1024;
 
   private boolean loaded = false;
+  
+  private static final String UPLOAD_ERRORS = "upload_errors";
+  private static final String FILES_QEUED = "files_queued";
+  private static final String IN_PROGRESS = "in_progress";
 
   /**
    * An enumeration of supported button action types, which can be passed to the
@@ -843,7 +847,7 @@ public class Uploader extends AbsolutePanel {
       nativeSetProperty(nativeFile, "timeSinceLastEvent", System.currentTimeMillis());
 
       //need to keep our global stats up to date manually
-      nativeSetProperty(getStats(), "in_progress", 1);
+      nativeSetProperty(getStats(), IN_PROGRESS, 1);
 
       //we need to fire it manually for the Ajax/XMLHttpRequest Level 2 case
       nativeUpdateFileProperties(nativeFile, File.Status.IN_PROGRESS.toInt());
@@ -970,7 +974,9 @@ public class Uploader extends AbsolutePanel {
         nativeSetProperty(getStats(), "upload_cancelled", getStats().getUploadsCancelled() + 1);
 
         if (triggerErrorEvent) {
-          nativeSetProperty(getStats(), "upload_errors", getStats().getUploadErrors() + 1);
+          // CPD-OFF
+          nativeSetProperty(getStats(), UPLOAD_ERRORS, getStats().getUploadErrors() + 1);
+          // CPD-ON
           if (this.uploadErrorHandler != null) {
             this.uploadErrorHandler.onUploadError(
                 new UploadErrorEvent(nativeFile.<File>cast(),
@@ -991,8 +997,8 @@ public class Uploader extends AbsolutePanel {
           // pulling it out of the internal queue and statistics on our own
           this.nativeFilesQueued.remove(nativeFile);
           this.nativeFilesQueuedById.remove(nativeFile.<File>cast().getId());
-          nativeSetProperty(getStats(), "files_queued", this.nativeFilesQueued.size());
-          nativeSetProperty(getStats(), "in_progress", 0);
+          nativeSetProperty(getStats(), FILES_QEUED, this.nativeFilesQueued.size());
+          nativeSetProperty(getStats(), IN_PROGRESS, 0);
         }
       }
   }
@@ -1296,7 +1302,7 @@ public class Uploader extends AbsolutePanel {
         if (this.fileUploadLimit > 0 && this.totalFilesUploaded >= this.fileUploadLimit) {
 
           // Keep the global stats up to date
-          nativeSetProperty(getStats(), "upload_errors", getStats().getUploadErrors() + 1);
+          nativeSetProperty(getStats(), UPLOAD_ERRORS, getStats().getUploadErrors() + 1);
 
           if (this.uploadErrorHandler != null) {
             this.uploadErrorHandler
@@ -1376,7 +1382,7 @@ public class Uploader extends AbsolutePanel {
     this.nativeFilesQueuedById.put(nativeFile.<File>cast().getId(), nativeFile);
 
     // need to keep the global stats up to date manually
-    nativeSetProperty(getStats(), "files_queued", this.nativeFilesQueued.size());
+    nativeSetProperty(getStats(), FILES_QEUED, this.nativeFilesQueued.size());
 
     // If requested, notify the app each time a new file is added to the queue
     if (this.fileQueuedHandler != null) {
@@ -1415,15 +1421,6 @@ public class Uploader extends AbsolutePanel {
     this.buttonImageElement = null;
   }
 
-  private boolean fileDialogStartEventCallback() {
-    return this.fileDialogStartHandler == null || this.fileDialogStartHandler
-        .onFileDialogStartEvent(new FileDialogStartEvent());
-  }
-
-  private boolean fileQueuedEventCallback(File file) {
-    return this.fileQueuedHandler == null || this.fileQueuedHandler.onFileQueued(new FileQueuedEvent(file));
-  }
-
   private boolean fileQueueErrorEventCallback(File file, int errorCode, String message) {
     // Keep the global stats up to date 
     nativeSetProperty(getStats(), "queue_errors", getStats().getQueueErrors() + 1);
@@ -1431,21 +1428,6 @@ public class Uploader extends AbsolutePanel {
     return this.fileQueueErrorHandler == null
            || this.fileQueueErrorHandler
                .onFileQueueError(new FileQueueErrorEvent(file, errorCode, message));
-  }
-
-  private boolean fileDialogCompleteEventCallback(int numberOfFilesSelected,
-                                                  int numberOfFilesQueued,
-                                                  int totalFilesInQueue) {
-    return this.fileDialogCompleteHandler == null
-           || this.fileDialogCompleteHandler
-               .onFileDialogComplete(new FileDialogCompleteEvent(numberOfFilesSelected,
-                                                                 numberOfFilesQueued,
-                                                                 totalFilesInQueue));
-  }
-
-  private boolean uploadStartEventCallback(File file) {
-    return this.uploadStartHandler == null || this.uploadStartHandler
-        .onUploadStart(new UploadStartEvent(file));
   }
 
   private boolean uploadProgressEventCallback(File file, double bytesComplete, double bytesTotal) {
@@ -1502,7 +1484,7 @@ public class Uploader extends AbsolutePanel {
     }
 
     // Keep the global stats up to date
-    nativeSetProperty(getStats(), "upload_errors", getStats().getUploadErrors() + 1);
+    nativeSetProperty(getStats(), UPLOAD_ERRORS, getStats().getUploadErrors() + 1);
 
     boolean response;
     try {
@@ -1583,8 +1565,8 @@ public class Uploader extends AbsolutePanel {
     }
 
     // Keep the global stats up to date 
-    nativeSetProperty(getStats(), "files_queued", this.nativeFilesQueued.size());
-    nativeSetProperty(getStats(), "in_progress", 0);
+    nativeSetProperty(getStats(), FILES_QEUED, this.nativeFilesQueued.size());
+    nativeSetProperty(getStats(), IN_PROGRESS, 0);
 
     return this.uploadCompleteHandler == null || this.uploadCompleteHandler
         .onUploadComplete(new UploadCompleteEvent(file));
