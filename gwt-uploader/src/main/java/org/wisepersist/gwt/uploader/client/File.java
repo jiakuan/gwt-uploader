@@ -26,8 +26,6 @@ import java.util.Date;
  * of this object is available on all uploader related event handlers, such as the
  * {@link org.wisepersist.gwt.uploader.client.events.UploadProgressHandler}.
  * <p>
- * Note that, by default, the SWFUpload "Speed" plugin is enabled, providing access to additional
- * metrics on this object such as {@link #getAverageSpeed()}, {@link #getPercentUploaded()}, etc.
  *
  * @author delight.wjk@gmail.com
  */
@@ -111,21 +109,6 @@ public final class File extends JavaScriptObject {
   public native String getType() /*-{
       return this.type;
   }-*/;
-
-  /**
-   * Returns the date the file was created, as reported by the client machine.  This method
-   * is purposefully hidden as it is available when the SWFUpload/Flash component is used, but
-   * is not available when the XMLHttpRequest Level 2 approach is used (which is the default).
-   * Please use the {@link #getModificationDate()} method instead (which is available in both
-   * cases).
-   *
-   * Reference: http://www.w3.org/TR/file-uploader/#dfn-file
-   *
-   * @return Date
-   */
-  protected Date getCreationDate() {
-    return new Date((long) nativeGetCreationDate());
-  }
 
   /**
    * Return the date the file was last modified, as reported by the client machine, or null
@@ -231,10 +214,6 @@ public final class File extends JavaScriptObject {
 
   private native double nativeGetSize() /*-{
       return this.size ? this.size : 0.0;
-  }-*/;
-
-  private native double nativeGetCreationDate() /*-{
-      return this.creationdate != null ? this.creationdate.getTime() : 0;
   }-*/;
 
   private native double nativeGetModificationDate() /*-{

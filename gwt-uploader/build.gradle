@@ -24,14 +24,18 @@ buildscript {
     }
     dependencies {
         // https://plugins.gradle.org/plugin/com.github.kt3k.coveralls
-        classpath "org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.6.3"
+        classpath("gradle.plugin.org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.12.2")
         // https://github.com/aaschmid/gradle-cpd-plugin
-        classpath 'de.aaschmid.gradle.plugins:gradle-cpd-plugin:0.5'
+        classpath "de.aaschmid:gradle-cpd-plugin:2.0"
+        // https://plugins.gradle.org/plugin/net.researchgate.release
+        classpath("net.researchgate:gradle-release:2.6.0")
     }
 }
 
 plugins {
-    id 'net.researchgate.release' version '2.4.0'
+    id 'net.researchgate.release' version '2.6.0'
+    id 'com.github.kt3k.coveralls' version '2.12.2'
+    id 'de.aaschmid.cpd' version '2.0'
 }
 
 apply plugin: 'java'
@@ -43,8 +47,8 @@ group = 'org.wisepersist'
 version = "$version"
 archivesBaseName = 'gwt-uploader'
 
-sourceCompatibility = 1.7
-targetCompatibility = 1.7
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
 
 project.extensions.idea.module.iml {
     withXml {
@@ -88,25 +92,27 @@ test {
 
 configurations.all {
     resolutionStrategy {
-        // fail eagerly on version conflict (includes transitive dependencies)
+    	// fail eagerly on version conflict (includes transitive dependencies)
         // e.g. multiple different versions of the same dependency (group and name are equal)
         failOnVersionConflict()
-
+    
         // force certain versions of dependencies (including transitive)
         //  *append new forced modules:
-        force 'com.google.guava:guava:22.0',
+        force 'com.google.guava:guava:30.1.1-jre',
               'com.google.code.findbugs:annotations:3.0.1',
-              'com.google.code.findbugs:jsr305:3.0.1'
+              'com.google.code.findbugs:jsr305:3.0.1',
+			  'com.google.jsinterop:jsinterop-annotations:2.0.0',
+			  'org.scala-lang:scala-library:2.12.4'
     }
 }
 
 dependencies {
     // Google Web Toolkit
-    compile 'com.google.gwt:gwt-user:2.8.1'
-    compile 'com.google.guava:guava-gwt:22.0'
+    compile 'org.gwtproject:gwt-user:2.10.0'
+    compile 'com.google.guava:guava-gwt:30.1.1-jre'
 
     // utility dependencies
-    compile 'com.google.guava:guava:22.0'
+    compile 'com.google.guava:guava:30.1.1-jre'
 
     // FindBugs annotations
     compile 'com.google.code.findbugs:annotations:3.0.1'
@@ -126,7 +132,7 @@ jar.doFirst {
 ext.userHome = System.getProperty("user.home")
 
 tasks.withType(JavaCompile) {
-    options.compilerArgs += ["-sourcepath", ""]
+    options.sourcepath = files(sourceSets.main.java.srcDirs)
 }
 
 javadoc {
@@ -150,22 +156,22 @@ artifacts {
     archives javadocJar
 }
 
-signing {
-    sign configurations.archives
-}
+//signing {
+//    sign configurations.archives
+//}
 
 uploadArchives {
     repositories {
         mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+            //beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
-            }
+            //repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+            //    authentication(userName: ossrhUsername, password: ossrhPassword)
+            //}
 
-            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
-                authentication(userName: ossrhUsername, password: ossrhPassword)
-            }
+            //snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+            //    authentication(userName: ossrhUsername, password: ossrhPassword)
+            //}
 
             pom.project {
                 name 'gwt-uploader'
@@ -214,24 +220,26 @@ uploadArchives {
 //    }
 //}
 
-task createPom << {
-    pom {
-        project {
-            packaging 'jar'
-            build {
-                plugins {
-                    plugin {
-                        groupId 'org.apache.maven.plugins'
-                        artifactId 'maven-compiler-plugin'
-                        version '3.1'
-                        configuration {
-                            source '1.7'
-                            target '1.7'
-                            encoding 'UTF-8'
-                        }
-                    }
-                }
-            }
-        }
-    }.writeTo("$projectDir/pom.xml")
+task createPom {
+	doLast {
+		pom {
+			project {
+				packaging 'jar'
+				build {
+					plugins {
+						plugin {
+							groupId 'org.apache.maven.plugins'
+							artifactId 'maven-compiler-plugin'
+							version '3.1'
+							configuration {
+								source '1.8'
+								target '1.8'
+								encoding 'UTF-8'
+							}
+						}
+					}
+				}
+			}
+		}.writeTo("$projectDir/pom.xml")
+	}
 }

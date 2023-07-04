@@ -25,12 +25,9 @@ import org.wisepersist.gwt.uploader.client.File;
  * .Uploader#setUploadProgressHandler(UploadProgressHandler)} method in order to access progress
  * events.
  * <p>
- * Note that the 'uploadProgress' event is fired periodically by the Flash Control. This event is
+ * Note that the 'uploadProgress' event is fired periodically by the control. This event is
  * useful for providing UI updates on the page.
  * <p>
- * Note: The Linux Flash Player fires a single uploadProgress event after the entire file has
- * been uploaded.
- * This is a bug in the Linux Flash Player that we cannot work around.
  *
  * @author delight.wjk@gmail.com
  */

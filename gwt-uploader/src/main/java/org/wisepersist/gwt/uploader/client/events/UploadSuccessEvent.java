@@ -29,16 +29,6 @@ import org.wisepersist.gwt.uploader.client.File;
  * returns a HTTP 200 status code. Any data outputted by the server is available in the server
  * data property.
  * <p>
- * Due to some bugs in the Flash Player the server response may not be acknowledged and no
- * uploadSuccess event is fired by Flash. In this case the {@link org.wisepersist.gwt.uploader
- * .client.Uploader#setAssumeSuccessTimeout(long)}
- * setting is checked to see if enough time has passed to fire uploadSuccess anyway. In this
- * case the received response parameter will be false.
- * <p>
- * The {@link org.wisepersist.gwt.uploader.client.Uploader#setHttpSuccess(long...)} setting allows
- * uploadSuccess to be fired for HTTP status codes other than 200. In this case no server data is
- * available from the Flash Player.
- * <p>
  * At this point the uploader is not yet complete. Another uploader cannot be started from
  * uploadSuccess.
  *
