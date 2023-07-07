@@ -3,6 +3,10 @@ archivesBaseName = "gwt-uploader"
 dependencies {
 }
 
+signing {
+  sign publishing.publications
+}
+
 def ossrU = project.hasProperty("ossrhUsername") ? ossrhUsername : ""
 def ossrP = project.hasProperty("ossrhPassword") ? ossrhPassword : ""
 
