@@ -26,7 +26,7 @@ gwt {
   minHeapSize = "512M"
   maxHeapSize = "1024M"
   logLevel = 'INFO'
-  modules = ["org.wisepersist.gwt.uploader.demo.GwtUploaderDemo"]
+  modules = ["org.docstr.gwt.uploader.demo.GwtUploaderDemo"]
 
   jsInteropExports(({
     shouldGenerate = true

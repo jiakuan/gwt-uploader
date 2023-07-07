@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+  <public path="client/resources">
+    <include name="*.js"/>
+    <include name="*.png"/>
+  </public>
+
+  <inherits name="com.google.gwt.user.User"/>
+  <inherits name="com.google.gwt.json.JSON"/>
+
+  <source path="client"/>
+  <source path="shared"/>
+</module>

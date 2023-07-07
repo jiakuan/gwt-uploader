@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module rename-to='gwt_uploader_demo'>
+  <inherits name='com.google.gwt.user.User'/>
+
+  <inherits name='com.google.gwt.user.theme.chrome.Chrome'/>
+  <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
+
+  <inherits name="elemental2.dom.Dom"/>
+  <inherits name="jsinterop.base.Base"/>
+
+  <inherits name='org.docstr.gwt.uploader.Uploader'/>
+
+  <entry-point
+      class='org.docstr.gwt.uploader.demo.client.GwtUploaderDemo'/>
+
+  <source path='client'/>
+  <source path='shared'/>
+</module>
