@@ -8,6 +8,7 @@ allprojects {
   apply plugin: "java"
   apply plugin: "idea"
   apply plugin: "maven-publish"
+  apply plugin: "signing"
 
   group = "org.docstr"
   version = "$version"

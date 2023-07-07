@@ -2,3 +2,60 @@ archivesBaseName = "gwt-uploader"
 
 dependencies {
 }
+
+def ossrU = project.hasProperty("ossrhUsername") ? ossrhUsername : ""
+def ossrP = project.hasProperty("ossrhPassword") ? ossrhPassword : ""
+
+publishing {
+  publications {
+    mavenJava(MavenPublication) {
+      from components.java
+      versionMapping {
+        usage('java-api') {
+          fromResolutionOf('runtimeClasspath')
+        }
+        usage('java-runtime') {
+          fromResolutionResult()
+        }
+      }
+      pom {
+        name = 'GWT Uploader'
+        description = 'An API to enable sophisticated file upload capabilities within a GWT application.'
+        url = 'https://github.com/jiakuan/gwt-uploader/'
+        packaging = 'jar'
+        licenses {
+          license {
+            name = 'The Apache License, Version 2.0'
+            url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+          }
+        }
+        developers {
+          developer {
+            id = 'jiakuan'
+            name = 'Jiakuan Wang'
+            email = 'jake@documentnode.io'
+            organization = 'Document Node'
+            organizationUrl = 'https://documentnode.io'
+          }
+        }
+
+        scm {
+          connection = 'scm:git:git@github.com:jiakuan/gwt-uploader.git'
+          developerConnection = 'scm:git:git@github.com:jiakuan/gwt-uploader.git'
+          url = 'git@github.com:jiakuan/gwt-uploader.git'
+        }
+      }
+    }
+  }
+  repositories {
+    maven {
+      def releasesRepoUrl = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+      def snapshotsRepoUrl = "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+      url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+      credentials {
+        username = ossrU
+        password = ossrP
+      }
+    }
+  }
+}
