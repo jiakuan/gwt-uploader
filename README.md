@@ -1,5 +1,7 @@
 ﻿# GWT Uploader
 
+![build](https://github.com/jiakuan/gwt-uploader/actions/workflows/gradle.yml/badge.svg)
+
 An API to enable sophisticated file upload capabilities within a GWT application.
 
 The source code was forked from http://www.moxiegroup.com/moxieapps/gwt-uploader/ and applied a few fixes.
