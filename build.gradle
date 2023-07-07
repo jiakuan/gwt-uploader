@@ -1,0 +1,194 @@
+plugins {
+  // https://github.com/researchgate/gradle-release
+  // https://plugins.gradle.org/plugin/net.researchgate.release
+  id "net.researchgate.release" version "3.0.2"
+}
+
+allprojects {
+  apply plugin: "java"
+  apply plugin: "idea"
+  apply plugin: "maven-publish"
+
+  group = "org.docstr"
+  version = "$version"
+}
+
+subprojects {
+  repositories {
+    mavenLocal()
+    mavenCentral()
+    google()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url "https://plugins.gradle.org/m2/" }
+  }
+
+  def javaVersion = JavaVersion.VERSION_1_8
+  sourceCompatibility = javaVersion
+  targetCompatibility = javaVersion
+
+  task enforceVersion {
+    doLast {
+      def foundVersion = JavaVersion.current()
+      if (foundVersion != javaVersion)
+        throw new IllegalStateException("Wrong Java version; required is "
+            + javaVersion + ", but found " + foundVersion)
+    }
+  }
+  compileJava.dependsOn(enforceVersion)
+
+  project.extensions.idea.module.iml {
+    withXml {
+      it.asNode().component.
+          find { it.@name == "NewModuleRootManager" }.@LANGUAGE_LEVEL = target.level
+    }
+  }
+
+  // ensure that test resources (src/test/resources) are added to CLASSPATH;
+  // see http://forums.gradle.org/gradle/topics/tests_arent_executed_when_setting_the_test_runtimeclasspath and
+  // http://gradle.org/docs/current/dsl/org.gradle.api.tasks.testing.Test.html#org.gradle.api.tasks.testing.Test:classpath
+  sourceSets {
+    main {
+      runtimeClasspath = files(output.resourcesDir) + runtimeClasspath
+    }
+    test {
+      runtimeClasspath = files(output.resourcesDir) + runtimeClasspath
+    }
+  }
+
+  test {
+    // enable TestNG support (default is JUnit)
+    useTestNG() {
+      suiteXmlBuilder().suite(name: "gwt-ace", parallel: "tests") {
+        test(name: "all-tests") {
+          packages {
+            "package"(name: "com.docstr.*")
+          }
+        }
+      }
+      excludeGroups "integration", "stress"
+      // useDefaultListeners = true produces the testng-results.xml files used by bamboo
+      // to display test result summaries
+      useDefaultListeners = true
+    }
+  }
+
+  configurations.all {
+    resolutionStrategy {
+      // fail eagerly on version conflict (includes transitive dependencies)
+      // e.g. multiple different versions of the same dependency (group and name are equal)
+      failOnVersionConflict()
+
+      // force certain versions of dependencies (including transitive)
+      //  *append new forced modules:
+      force "com.google.guava:guava:31.0.1-jre",
+          "com.google.inject:guice:4.1.0",
+          "com.google.inject.extensions:guice-assistedinject:4.1.0",
+          "com.google.inject.extensions:guice-multibindings:4.1.0",
+          "com.google.inject.extensions:guice-servlet:4.1.0",
+          "com.google.code.findbugs:annotations:3.0.1",
+          "com.google.code.findbugs:jsr305:3.0.1",
+          "com.google.jsinterop:jsinterop-annotations:2.0.0",
+          "com.beust:jcommander:1.82",
+          "commons-collections:commons-collections:3.2.2",
+          "commons-codec:commons-codec:1.10",
+          "commons-io:commons-io:2.4",
+          "net.bytebuddy:byte-buddy:1.12.21",
+          "org.ow2.asm:asm:7.1",
+          "org.ow2.asm:asm-commons:7.1",
+          "org.ow2.asm:asm-tree:7.1",
+          "org.ow2.asm:asm-analysis:7.1",
+          "org.eclipse.jetty:jetty-util:9.2.14.v20151106",
+          "org.eclipse.jetty:jetty-io:9.2.14.v20151106",
+          "org.eclipse.jetty:jetty-server:9.2.14.v20151106",
+          "org.eclipse.jetty:jetty-http:9.2.14.v20151106",
+          "org.eclipse.jetty:jetty-servlet:9.2.14.v20151106",
+          "org.jetbrains.kotlin:kotlin-stdlib:1.7.0",
+          "org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.7.0",
+          "xml-apis:xml-apis:1.4.01"
+    }
+  }
+
+  configurations {
+    implementation.exclude module: "cglib"
+    implementation.exclude module: "apache-jsp"
+    implementation.exclude group: "org.eclipse.jetty.orbit"
+  }
+
+  dependencies {
+    // Google Web Toolkit
+    implementation "com.google.gwt:gwt-user:2.10.0"
+    implementation "com.google.guava:guava-gwt:31.1-jre"
+    // https://github.com/google/elemental2
+    implementation "com.google.elemental2:elemental2-dom:1.1.0"
+    implementation "com.google.jsinterop:base:1.0.0"
+
+    // JSON
+    implementation 'com.github.nmorel.gwtjackson:gwt-jackson:0.15.4'
+
+    // FindBugs annotations
+    implementation "com.google.code.findbugs:annotations:3.0.1"
+    implementation "com.google.code.findbugs:jsr305:3.0.1"
+
+    // test dependencies
+    testImplementation "javax.json:javax.json-api:1.0"
+    testImplementation "org.glassfish:javax.json:1.0.4"
+    testImplementation "commons-io:commons-io:2.4"
+
+    testImplementation("org.assertj:assertj-core:3.24.2")
+    testImplementation "org.mockito:mockito-core:2.8.9"
+    testImplementation "org.testng:testng:6.11"
+  }
+
+  release {
+    git {
+      requireBranch.set("master")
+    }
+  }
+
+  tasks.withType(JavaCompile) {
+    options.sourcepath = null
+  }
+
+  javadoc {
+    // Avoid error: cannot access external classes
+    options.addStringOption("sourcepath", "")
+
+    if (JavaVersion.current().isJava9Compatible()) {
+      options.addBooleanOption('html5', true)
+    }
+  }
+
+  java {
+    withJavadocJar()
+    withSourcesJar()
+  }
+
+  artifacts {
+    archives sourcesJar
+    archives javadocJar
+  }
+
+  jar.doFirst {
+    sourceSets.main.java.srcDirs.each {
+      from it
+    }
+  }
+
+  jar {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+  }
+
+  sourcesJar {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+  }
+
+  processResources {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+  }
+}
+
+build {
+  doFirst {
+    delete "out"
+  }
+}

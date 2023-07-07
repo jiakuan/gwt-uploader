@@ -22,8 +22,8 @@ import com.google.gwt.user.client.ui.Widget;
  * @author delight.wjk@gmail.com
  */
 public interface UploaderSample {
+  // TODO: Update this URL to point to a server-side upload handler with CORS enabled.
+  String UPLOAD_URL = "http://gwt-uploader.appspot.com/upload";
 
   Widget getUploaderPanel();
-
-  String getUploaderCode();
 }

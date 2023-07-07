@@ -20,27 +20,9 @@ import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Image;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
-
+import com.google.gwt.user.client.ui.*;
 import org.wisepersist.gwt.uploader.client.Uploader;
-import org.wisepersist.gwt.uploader.client.events.FileDialogCompleteEvent;
-import org.wisepersist.gwt.uploader.client.events.FileDialogCompleteHandler;
-import org.wisepersist.gwt.uploader.client.events.FileDialogStartEvent;
-import org.wisepersist.gwt.uploader.client.events.FileDialogStartHandler;
-import org.wisepersist.gwt.uploader.client.events.FileQueueErrorEvent;
-import org.wisepersist.gwt.uploader.client.events.FileQueueErrorHandler;
-import org.wisepersist.gwt.uploader.client.events.FileQueuedEvent;
-import org.wisepersist.gwt.uploader.client.events.FileQueuedHandler;
-import org.wisepersist.gwt.uploader.client.events.UploadCompleteEvent;
-import org.wisepersist.gwt.uploader.client.events.UploadCompleteHandler;
-import org.wisepersist.gwt.uploader.client.events.UploadErrorEvent;
-import org.wisepersist.gwt.uploader.client.events.UploadErrorHandler;
-import org.wisepersist.gwt.uploader.client.events.UploadProgressEvent;
-import org.wisepersist.gwt.uploader.client.events.UploadProgressHandler;
+import org.wisepersist.gwt.uploader.client.events.*;
 import org.wisepersist.gwt.uploader.client.progress.ProgressBar;
 
 import java.util.LinkedHashMap;
@@ -66,7 +48,7 @@ public class MultiUploadWithProgressBar implements EntryPoint, UploaderSample {
     final VerticalPanel progressBarPanel = new VerticalPanel();
     final Map<String, ProgressBar> progressBars = new LinkedHashMap<String, ProgressBar>();
     final Map<String, Image> cancelButtons = new LinkedHashMap<String, Image>();
-    uploader.setUploadURL("/upload")
+    uploader.setUploadURL(UPLOAD_URL)
         .setButtonImageURL(AppResources.INSTANCE.upload().getSafeUri().asString())
         .setButtonWidth(133)
         .setButtonHeight(22)
@@ -146,7 +128,7 @@ public class MultiUploadWithProgressBar implements EntryPoint, UploaderSample {
           public boolean onFileQueueError(FileQueueErrorEvent fileQueueErrorEvent) {
             Window.alert(
                 "Upload of file " + fileQueueErrorEvent.getFile().getName() + " failed due to [" +
-                fileQueueErrorEvent.getErrorCode().toString() + "]: " + fileQueueErrorEvent
+                    fileQueueErrorEvent.getErrorCode().toString() + "]: " + fileQueueErrorEvent
                     .getMessage()
             );
             return true;
@@ -157,7 +139,7 @@ public class MultiUploadWithProgressBar implements EntryPoint, UploaderSample {
             cancelButtons.get(uploadErrorEvent.getFile().getId()).removeFromParent();
             Window.alert(
                 "Upload of file " + uploadErrorEvent.getFile().getName() + " failed due to [" +
-                uploadErrorEvent.getErrorCode().toString() + "]: " + uploadErrorEvent.getMessage()
+                    uploadErrorEvent.getErrorCode().toString() + "]: " + uploadErrorEvent.getMessage()
             );
             return true;
           }
@@ -169,11 +151,6 @@ public class MultiUploadWithProgressBar implements EntryPoint, UploaderSample {
     horizontalPanel.setCellHorizontalAlignment(uploader, HorizontalPanel.ALIGN_LEFT);
     horizontalPanel.setCellHorizontalAlignment(progressBarPanel, HorizontalPanel.ALIGN_RIGHT);
     return horizontalPanel;
-  }
-
-  @Override
-  public final String getUploaderCode() {
-    return AppResources.INSTANCE.sourceMultiUploadWithProgressBar().getText();
   }
 
   protected class CancelProgressBarTextFormatter extends ProgressBar.TextFormatter {

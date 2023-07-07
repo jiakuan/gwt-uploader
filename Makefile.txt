@@ -1,13 +1,10 @@
----------------------------------------------------------------------
-Usage: make clean|build|release|install|publish|deploy"
 
-  clean           - clean the build folders
-  build           - build the projects
-  release         - create a new release of gwt-uploader
-  install         - install the current Maven artifacts into local maven
-  publishSnapshot - publish the latest snapshot of gwt-uploader
-  publish         - publish the latest stable release of gwt-uploader
-                    to Maven central
-  deploy          - deploy gwt-upload-demo to remote AppEngine
+Usage: make options...
 
----------------------------------------------------------------------
+Option            Description
+------            -----------
+clean             Clean build directories of projects
+build             Build projects with tests and quality checking
+release           Create a new release from master branch
+publish           Publish the latest version to Maven central
+

@@ -1,208 +1,55 @@
+import org.docstr.gradle.plugins.gwt.GwtCompileOptions
+import org.docstr.gradle.plugins.gwt.GwtJsInteropExportsOptions
+
 /*
- * Copyright 2014-2016 Wise Persist Pty Ltd.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Copyright (c) 2022 Document Node Pty Ltd. All rights reserved.
  */
 
-buildscript {
-    repositories {
-        mavenLocal()
-        mavenCentral()
-        jcenter()
-        maven { url "https://plugins.gradle.org/m2/" }
-        maven { url 'http://dl.bintray.com/steffenschaefer/maven' } // GWT plugin
-    }
-    dependencies {
-        classpath 'com.google.appengine:gradle-appengine-plugin:1.9.59'
+plugins {
+  id 'java'
+  id 'idea'
+  id 'war'
 
-        // https://plugins.gradle.org/plugin/com.github.kt3k.coveralls
-        classpath("gradle.plugin.org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.12.2")
-
-        // https://github.com/aaschmid/gradle-cpd-plugin
-        classpath "de.aaschmid:gradle-cpd-plugin:2.0"
-
-        // https://github.com/steffenschaefer/gwt-gradle-plugin
-        classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
-    }
+  // https://github.com/jiakuan/gwt-gradle-plugin
+  // https://plugins.gradle.org/plugin/org.docstr.gwt
+  id "org.docstr.gwt" version "1.1.26"
 }
 
-apply plugin: 'java'
-apply plugin: 'idea'
-apply plugin: 'war'
-apply plugin: 'gwt'
-apply plugin: 'appengine'
-
-group = 'org.wisepersist'
-version = "$version"
-archivesBaseName = 'gwt-uploader-demo'
-
-repositories {
-    mavenLocal()
-    mavenCentral()
-    maven { url 'http://oss.sonatype.org/content/repositories/snapshots' }
-}
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-project.extensions.idea.module.iml {
-    withXml {
-        it.asNode().component.
-                find { it.@name == 'NewModuleRootManager' }.@LANGUAGE_LEVEL = target.level
-    }
-}
-
-test {
-    // enable TestNG support (default is JUnit)
-    useTestNG() {
-        excludeGroups 'integration', 'temporary'
-        // useDefaultListeners = true produces the testng-results.xml files used by bamboo
-        // to display test result summaries
-        useDefaultListeners = true
-    }
-}
-
-configurations.all {
-    // check for updates every build
-    //resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
-
-    resolutionStrategy {
-        // fail eagerly on version conflict (includes transitive dependencies)
-        // e.g. multiple different versions of the same dependency (group and name are equal)
-        failOnVersionConflict()
-
-        // force certain versions of dependencies (including transitive)
-        //  *append new forced modules:
-        force 'javax.servlet:servlet-api:2.5',
-              'javax.validation:validation-api:1.0.0.GA',
-              'ch.qos.logback:logback-core:1.1.7',
-              'ch.qos.logback:logback-classic:1.1.7',
-              'com.google.inject:guice:4.1.0',
-              'com.google.inject.extensions:guice-multibindings:4.1.0',
-              'com.google.inject.extensions:guice-assistedinject:4.1.0',
-              'com.google.inject.extensions:guice-servlet:4.1.0',
-              'com.google.code.findbugs:annotations:3.0.1',
-              'com.google.code.findbugs:jsr305:3.0.1',
-              'com.google.guava:guava:30.1.1-jre',
-              'com.google.guava:guava-gwt:30.1.1-jre',
-              'org.gwtproject:gwt-user:2.10.0',
-              'org.gwtproject:gwt-codeserver:2.10.0',
-              'com.googlecode.objectify:objectify:5.1.13',
-              'com.google.jsinterop:jsinterop-annotations:2.0.0',
-              'commons-io:commons-io:2.7',
-              'commons-lang:commons-lang:2.6',
-              'commons-collections:commons-collections:3.2.2',
-              'commons-codec:commons-codec:1.10',
-              'org.eclipse.jetty:jetty-util:9.2.14.v20151106',
-              'org.eclipse.jetty:jetty-io:9.2.14.v20151106',
-              'org.glassfish.jersey.containers:jersey-container-servlet-core:2.23',
-              'org.javassist:javassist:3.18.2-GA',
-              'org.ow2.asm:asm:9.2',
-              'org.ow2.asm:asm-commons:9.2',
-              // https://github.com/ronmamo/reflections/issues/92
-              'org.slf4j:slf4j-api:1.7.21',
-              'org.testng:testng:6.11',
-              'joda-time:joda-time:2.9.4',
-              'xml-apis:xml-apis:1.4.01'
-    }
-}
+archivesBaseName = "gwt-uploader-demo"
 
 dependencies {
-    compile 'org.wisepersist:gwt-uploader:1.2.4-SNAPSHOT'
-    compile 'org.gwtproject:gwt-codeserver:2.10.0'
-
-    // Google AppEngine related dependencies
-    appengineSdk 'com.google.appengine:appengine-java-sdk:1.9.59'
-    compile 'com.google.appengine:appengine-api-1.0-sdk:1.9.59'
-
-    // DI
-    compile 'com.google.inject:guice:4.1.0'
-    compile 'com.google.inject.extensions:guice-servlet:4.1.0'
-    compile 'com.google.inject.extensions:guice-assistedinject:4.1.0'
-    compile 'com.google.inject.extensions:guice-multibindings:4.1.0'
-
-    // Google Web Toolkit
-    compile 'org.gwtproject:gwt-user:2.10.0'
-    compile 'org.gwtproject:gwt-dev:2.10.0'
-    compile 'com.google.guava:guava-gwt:30.1.1-jre'
-
-    // Needed for GWT compile and at runtime for RequestBuilder
-    // Specify two artifacts as workaround for GRADLE-1934
-    compile('javax.validation:validation-api:1.0.0.GA') {
-        artifact {
-            name = 'validation-api'
-            type = 'jar'
-        }
-        artifact {
-            name = 'validation-api'
-            type = 'jar'
-            classifier = 'sources'
-        }
-    }
-    compile('org.hibernate:hibernate-validator:4.1.0.Final') {
-        artifact {
-            name = 'hibernate-validator'
-            type = 'jar'
-        }
-        artifact {
-            name = 'hibernate-validator'
-            type = 'jar'
-            classifier = 'sources'
-        }
-    }
-}
-
-processResources {
-    //def userHome = System.getProperty("user.home")
-    filesMatching("**/*.xml") {
-        expand([
-                "appVersion"   : project.version,
-                "fileSeparator": File.separator
-        ])
-    }
-}
-
-appengine {
-    downloadSdk = true
+  implementation project(':gwt-uploader')
 }
 
 gwt {
-    gwtVersion = '2.10.0'
-    minHeapSize = "512M";
-    maxHeapSize = "1024M";
-    logLevel = 'INFO'
-    modules 'org.wisepersist.gwt.uploader.demo.GwtUploaderDemo'
-    compiler {
-        strict = true
-    }
-}
+  gwtVersion = '2.10.0'
+  minHeapSize = "512M"
+  maxHeapSize = "1024M"
+  logLevel = 'INFO'
+  modules = ["org.wisepersist.gwt.uploader.demo.GwtUploaderDemo"]
 
-compileGwt {
-    modules = ['org.wisepersist.gwt.uploader.demo.GwtUploaderDemo']
+  jsInteropExports(({
+    shouldGenerate = true
+  } as Closure<GwtJsInteropExportsOptions>))
+
+  compiler(({
+    strict = true
+  } as Closure<GwtCompileOptions>))
 }
 
 war {
-    classpath = classpath.filter { file ->
-        // println file.name
-        (
-                !file.name.startsWith(('gwt-dev')) &&
-                !file.name.startsWith(('gwt-user')) &&
-                !file.name.startsWith(('gwtp')) &&
-                !file.name.startsWith(('guava-gwt')) &&
-                !file.name.startsWith(('servlet-api')) &&
-                !file.name.startsWith(('spring'))
-        )
-    }
+  classpath = classpath.filter { file ->
+    // println file.name
+    (
+        !file.name.startsWith(('gwt-dev')) &&
+            !file.name.startsWith(('gwt-user')) &&
+            !file.name.startsWith(('guava-gwt')) &&
+            !file.name.startsWith(('gwtbootstrap3')) &&
+            !file.name.startsWith(('gwtbootstrap3-extras')) &&
+            !file.name.startsWith(('servlet-api'))
+    )
+  }
+  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 //sourceSets.main.resources { srcDir file('src/main/java') exclude '*/.java' }
@@ -210,53 +57,57 @@ sourceSets.main.resources.srcDir 'src/main/java'
 sourceSets.test.resources.srcDir 'src/test/java'
 
 configurations {
-    runtime.exclude group: "org.gwtproject", module: "gwt-user"
-    runtime.exclude group: "org.gwtproject", module: "gwt-dev"
+  runtime.exclude group: "com.google.gwt", module: "gwt-user"
+  runtime.exclude group: "com.google.gwt", module: "gwt-dev"
 }
 
-// changes the logging level to INFO for all Ant targets
-[build]*.logging*.level = LogLevel.INFO
-
-build.doLast {
-    // Copy GWT module folders
-    deleteFolder('src/main/webapp/GwtUploaderDemo')
-    copyFilesInFolder('build/gwt/out/GwtUploaderDemo', 'src/main/webapp/GwtUploaderDemo')
+clean {
+  deleteFolder('classes')
+  deleteFolder('war')
 }
 
 build.doLast {
-    // Copy GWT module folders
-    deleteFolder('src/main/webapp/GwtUploaderDemo')
-    copyFilesInFolder('build/gwt/out/GwtUploaderDemo', 'src/main/webapp/GwtUploaderDemo')
+  // Copy GWT module folders
+  deleteFolder('src/main/webapp/gwt_uploader_demo')
+  copyFilesInFolder('build/gwt/out/gwt_uploader_demo', 'src/main/webapp/gwt_uploader_demo')
 }
 
 private void deleteFolder(folderPath) {
-    File folder = new File(projectDir, folderPath)
-    if (folder.exists()) {
-        ant.echo('Deleting folder: ' + folder.absolutePath)
-        ant.delete(includeEmptyDirs: 'true') {
-            fileset(dir: folder)
-        }
+  File folder = new File(projectDir, folderPath)
+  if (folder.exists()) {
+    ant.echo('Deleting folder: ' + folder.absolutePath)
+    ant.delete(includeEmptyDirs: 'true') {
+      fileset(dir: folder)
     }
+  }
 }
 
 private void copyFilesInFolder(sourcePath, destPath) {
-    File sourceDir = new File(projectDir, sourcePath)
-    File destDir = new File(projectDir, destPath)
-    ant.echo('Copying: ' + sourcePath + ' => ' + destPath)
-    if (!destDir.exists()) {
-        destDir.mkdirs()
-    }
-    ant.copy(todir: destDir) {
-        fileset(dir: sourceDir)
-    }
+  File sourceDir = new File(projectDir, sourcePath)
+  if (!sourceDir.exists()) {
+    return
+  }
+
+  File destDir = new File(projectDir, destPath)
+  ant.echo('Copying: ' + sourcePath + ' => ' + destPath)
+  if (!destDir.exists()) {
+    destDir.mkdirs()
+  }
+  ant.copy(todir: destDir) {
+    fileset(dir: sourceDir)
+  }
 }
 
 private void copyFile(sourcePath, destPath) {
-    File sourceFile = new File(projectDir, sourcePath)
-    File destFile = new File(projectDir, destPath)
-    ant.echo('Copying: ' + sourcePath + ' => ' + destPath)
-    if (!destFile.parentFile.exists()) {
-        destFile.parentFile.mkdirs()
-    }
-    ant.copyfile(src: sourceFile, dest: destFile)
+  File sourceFile = new File(projectDir, sourcePath)
+  if (!sourceFile.exists()) {
+    return
+  }
+
+  File destFile = new File(projectDir, destPath)
+  ant.echo('Copying: ' + sourcePath + ' => ' + destPath)
+  if (!destFile.parentFile.exists()) {
+    destFile.parentFile.mkdirs()
+  }
+  ant.copyfile(src: sourceFile, dest: destFile)
 }

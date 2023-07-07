@@ -1,0 +1,4 @@
+rootProject.name = 'gwt-uploader-root'
+
+include 'gwt-uploader'
+include 'gwt-uploader-demo'

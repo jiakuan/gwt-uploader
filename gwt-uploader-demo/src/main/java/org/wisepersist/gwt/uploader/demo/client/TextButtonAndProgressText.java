@@ -19,23 +19,9 @@ package org.wisepersist.gwt.uploader.demo.client;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.i18n.client.NumberFormat;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.HorizontalPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.RootPanel;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.Widget;
-
+import com.google.gwt.user.client.ui.*;
 import org.wisepersist.gwt.uploader.client.Uploader;
-import org.wisepersist.gwt.uploader.client.events.FileDialogCompleteEvent;
-import org.wisepersist.gwt.uploader.client.events.FileDialogCompleteHandler;
-import org.wisepersist.gwt.uploader.client.events.FileQueueErrorEvent;
-import org.wisepersist.gwt.uploader.client.events.FileQueueErrorHandler;
-import org.wisepersist.gwt.uploader.client.events.UploadErrorEvent;
-import org.wisepersist.gwt.uploader.client.events.UploadErrorHandler;
-import org.wisepersist.gwt.uploader.client.events.UploadProgressEvent;
-import org.wisepersist.gwt.uploader.client.events.UploadProgressHandler;
-import org.wisepersist.gwt.uploader.client.events.UploadSuccessEvent;
-import org.wisepersist.gwt.uploader.client.events.UploadSuccessHandler;
+import org.wisepersist.gwt.uploader.client.events.*;
 
 /**
  * Simple Text Link and Progress text label example of GWT Uploader.
@@ -55,7 +41,7 @@ public class TextButtonAndProgressText implements EntryPoint, UploaderSample {
   @Override
   public Widget getUploaderPanel() {
     progressLabel.setStyleName("progressLabel");
-    uploader.setUploadURL("/upload")
+    uploader.setUploadURL(UPLOAD_URL)
         .setButtonText("<span class=\"buttonText\">Click to Upload</span>")
         .setButtonTextStyle(
             ".buttonText {font-family: Arial, sans-serif; font-size: 14px; color: #BB4B44}")
@@ -80,7 +66,7 @@ public class TextButtonAndProgressText implements EntryPoint, UploaderSample {
             sb.append("File ").append(uploadSuccessEvent.getFile().getName())
                 .append(" (")
                 .append(NumberFormat.getDecimalFormat()
-                            .format(uploadSuccessEvent.getFile().getSize() / 1024))
+                    .format(uploadSuccessEvent.getFile().getSize() / 1024))
                 .append(" KB)")
                 .append(" uploaded successfully at ")
                 .append(NumberFormat.getDecimalFormat().format(
@@ -107,7 +93,7 @@ public class TextButtonAndProgressText implements EntryPoint, UploaderSample {
             resetText();
             Window.alert(
                 "Upload of file " + fileQueueErrorEvent.getFile().getName() + " failed due to [" +
-                fileQueueErrorEvent.getErrorCode().toString() + "]: " + fileQueueErrorEvent
+                    fileQueueErrorEvent.getErrorCode().toString() + "]: " + fileQueueErrorEvent
                     .getMessage()
             );
             return true;
@@ -118,7 +104,7 @@ public class TextButtonAndProgressText implements EntryPoint, UploaderSample {
             resetText();
             Window.alert(
                 "Upload of file " + uploadErrorEvent.getFile().getName() + " failed due to [" +
-                uploadErrorEvent.getErrorCode().toString() + "]: " + uploadErrorEvent.getMessage()
+                    uploadErrorEvent.getErrorCode().toString() + "]: " + uploadErrorEvent.getMessage()
             );
             return true;
           }
@@ -130,11 +116,6 @@ public class TextButtonAndProgressText implements EntryPoint, UploaderSample {
     verticalPanel.setCellHorizontalAlignment(uploader, HorizontalPanel.ALIGN_LEFT);
     verticalPanel.setCellHorizontalAlignment(progressLabel, HorizontalPanel.ALIGN_LEFT);
     return verticalPanel;
-  }
-
-  @Override
-  public final String getUploaderCode() {
-    return AppResources.INSTANCE.sourceImageButtonAndProgressText().getText();
   }
 
   private void resetText() {

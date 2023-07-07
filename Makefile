@@ -6,32 +6,15 @@ help:
 	cat Makefile.txt
 
 clean:
-	cd ${mkfile_dir}/gwt-uploader && ./gradlew clean
-	cd ${mkfile_dir}/gwt-uploader-demo && ./gradlew clean
-	cd ${mkfile_dir}
+	./gradlew clean
 
 .PHONY: build
 build:
-	cd ${mkfile_dir}/gwt-uploader && ./gradlew build
-	cd ${mkfile_dir}/gwt-uploader-demo && ./gradlew build
-	cd ${mkfile_dir}
+	./gradlew build
 
 release:
-	cd ${mkfile_dir}/gwt-uploader && ./gradlew release && cd ${mkfile_dir}
-
-install:
-	rm -rf ~/.m2/repository/org/wisepersist/gwt-uploader/
-	cd ${mkfile_dir}/gwt-uploader && ./gradlew clean build install
-
-publishSnapshot:
-	cd ${mkfile_dir}/gwt-uploader && ./gradlew build install uploadArchives && \
-	cd ${mkfile_dir}
+	./gradlew release -Prelease.useAutomaticVersion=true
 
 publish:
-	cd ${mkfile_dir}/gwt-uploader && git checkout tags/${LATEST_TAG} && \
-	./gradlew build install uploadArchives && git checkout master && \
-	cd ${mkfile_dir}
-
-deploy:
-	cd ${mkfile_dir}/gwt-uploader-demo && ./gradlew build appengineUpdate && \
-	cd ${mkfile_dir}
+	rm -rf $$HOME/.m2/repository/org/docstr/gwt-uploader
+	./gradlew build publishMavenJavaPublicationToMavenLocal publishMavenJavaPublicationToMavenRepository
