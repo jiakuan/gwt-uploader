@@ -47,7 +47,7 @@ To add the dependency to your `build.gradle` (for Gradle projects) or `pom.xml` 
 For Gradle projects:
 
 ```
-compile 'org.docstr:gwt-uploader:1.2.3'
+compile 'org.docstr:gwt-uploader:1.2.4'
 ```
 
 For Maven projects:
@@ -56,43 +56,8 @@ For Maven projects:
 <dependency>
     <groupId>org.docstr</groupId>
     <artifactId>gwt-uploader</artifactId>
-    <version>1.2.3</version>
+    <version>1.2.4</version>
 </dependency>
-```
-
-If you would like to use the 1.2.4-SNAPSHOT release, use this configuration.
-
-For Gradle projects:
-
-```
-compile 'org.docstr:gwt-uploader:1.2.4-SNAPSHOT'
-```
-
-For Maven projects:
-
-```
-<dependency>
-    <groupId>org.docstr</groupId>
-    <artifactId>gwt-uploader</artifactId>
-    <version>1.2.4-SNAPSHOT</version>
-</dependency>
-```
-
-In order to use snapshot releases you also need to add the Sonatype snapshots repository to your POM:
-
-```
-<repositories>
-    <repository>
-        <id>sonatype-nexus-snapshots</id>
-        <url>http://oss.sonatype.org/content/repositories/snapshots</url>
-        <snapshots>
-            <enabled>true</enabled>
-        </snapshots>
-        <releases>
-            <enabled>false</enabled>
-        </releases>
-    </repository>
-</repositories>
 ```
 
 ## How to use GWT Uploader?
