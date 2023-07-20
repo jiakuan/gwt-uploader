@@ -1,6 +1,5 @@
-LATEST_TAG?=`cd ${mkfile_dir}/gwt-uploader && git tag|sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4n | tail -1`
-mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
-mkfile_dir :=$(shell cd $(shell dirname $(mkfile_path)); pwd)
+LATEST_TAG?=`git tag|sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4n | tail -1`
+PROJECT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
 
 help:
 	cat Makefile.txt
