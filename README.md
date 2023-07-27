@@ -47,7 +47,7 @@ To add the dependency to your `build.gradle` (for Gradle projects) or `pom.xml` 
 For Gradle projects:
 
 ```
-implementation 'org.docstr:gwt-uploader:1.2.4'
+implementation 'org.docstr:gwt-uploader:1.2.5'
 ```
 
 For Maven projects:
@@ -56,7 +56,7 @@ For Maven projects:
 <dependency>
     <groupId>org.docstr</groupId>
     <artifactId>gwt-uploader</artifactId>
-    <version>1.2.4</version>
+    <version>1.2.5</version>
 </dependency>
 ```
 
