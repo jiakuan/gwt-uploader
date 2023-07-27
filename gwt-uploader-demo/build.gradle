@@ -19,6 +19,15 @@ archivesBaseName = "gwt-uploader-demo"
 
 dependencies {
   implementation project(':gwt-uploader')
+
+  // https://github.com/google/elemental2
+  implementation "com.google.elemental2:elemental2-dom:1.1.0"
+  implementation "com.google.jsinterop:base:1.0.0"
+
+  // test dependencies
+  testImplementation("org.assertj:assertj-core:3.24.2")
+  testImplementation "org.mockito:mockito-core:2.8.9"
+  testImplementation 'org.testng:testng:7.7.0'
 }
 
 gwt {
